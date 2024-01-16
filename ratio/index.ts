@@ -1,6 +1,7 @@
 import { Dummy } from "./characters/Dummy";
 import { Ratio } from "./characters/Ratio";
 import { Glamoth } from "./relics/planars/Glamoth";
+import { Rutilant } from "./relics/planars/Rutilant";
 import { Salsotto } from "./relics/planars/Salsotto";
 import { SpaceSealingStation } from "./relics/planars/SpaceSealingStation";
 import { Musketeer } from "./relics/relic_sets/Musketeer";
@@ -72,7 +73,12 @@ function lightConeTests() {
 }
 
 function planarTests() {
-    let planars = [new Glamoth(), new Salsotto(), new SpaceSealingStation()];
+    let planars = [
+        new Glamoth(),
+        new Salsotto(),
+        new SpaceSealingStation(),
+        new Rutilant(),
+    ];
     for (const planar of planars) {
         console.log(planar.name);
         const ratio = new Ratio(
@@ -104,7 +110,12 @@ function planarTests() {
 
 /* potentially functionally broken */
 function bothTests() {
-    let planars = [new Glamoth(), new Salsotto(), new SpaceSealingStation()];
+    let planars = [
+        new Glamoth(),
+        new Salsotto(),
+        new SpaceSealingStation(),
+        new Rutilant(),
+    ];
     for (const planar of planars) {
         for (const [lightConeId, lc] of Object.entries(light_cones)) {
             console.log(lc.name);
