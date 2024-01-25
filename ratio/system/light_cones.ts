@@ -73,7 +73,7 @@ export const light_cones = {
             stats.baseDefense += 463;
             stats.baseAttack += 529;
             stats.percentAttack += 0.4;
-            stats.critRate += 0.32;
+            stats.critRate += 0.24;
             return stats;
         },
         modifyAttack(attack: Attack) {
@@ -187,9 +187,8 @@ export const light_cones = {
                 attack.addModifier(
                     new AttackModifier(AttackModifierType.DamageBoost, 0.3)
                 );
+                worrisome_tame = Math.min(2, worrisome_tame + 1);
             }
-
-            worrisome_tame = Math.min(2, worrisome_tame + 1);
 
             return attack;
         },
