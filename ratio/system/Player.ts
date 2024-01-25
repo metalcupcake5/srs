@@ -1,17 +1,20 @@
 import { Game } from "./Game";
 import { Stats } from "./Stats";
+import { Effect } from "./effects/Effect";
 
 export abstract class Player {
     name: string;
     speed: number;
     actionValue: number;
     stats: Stats;
+    effects: Effect[];
 
     constructor(name: string, speed: number, stats: Stats) {
         this.name = name;
         this.speed = speed;
         this.actionValue = 10_000 / speed;
         this.stats = stats;
+        this.effects = [];
     }
 
     abstract act(game: Game): void;
@@ -24,5 +27,9 @@ export abstract class Player {
 
     printActionValue(): void {
         console.log(`${this.name}: ${Math.floor(this.actionValue)} AV`);
+    }
+
+    addEffect(effect: Effect) {
+        this.effects.push(effect);
     }
 }
