@@ -1,4 +1,5 @@
 import { Dummy } from "./characters/Dummy";
+import { FuXuan } from "./characters/FuXuan";
 import { Ratio } from "./characters/Ratio";
 import { Glamoth } from "./relics/planars/Glamoth";
 import { Rutilant } from "./relics/planars/Rutilant";
@@ -150,4 +151,13 @@ function bothTests() {
 }
 
 // bothTests();
-planarTests();
+const fx = new FuXuan(
+    {},
+    {
+        percentAttack: 2,
+        speed: 2,
+        critRate: 7,
+        critDamage: 12,
+    }
+);
+const game = new Game([fx, new Enemy("yeah", 100), new Dummy(), new Dummy()]);
