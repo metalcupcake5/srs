@@ -44,6 +44,7 @@ export class Stats {
     maxEnergy: number;
     breakEffect: number = 0;
     effectHitRate: number = 0;
+    energyRegenerationRate: number = 0;
     effectRes: number = 0;
 
     constructor(
@@ -61,6 +62,8 @@ export class Stats {
         this.baseAttack = attack;
         this.speed = speed;
         this.maxEnergy = maxEnergy;
+
+        // TODO replace with check for type of character
 
         //standard dps mainstats
         this.flatAttack += 352.8; // hands
@@ -131,6 +134,7 @@ export class Stats {
         newStats.breakEffect = this.breakEffect;
         newStats.effectHitRate = this.effectHitRate;
         newStats.effectRes = this.effectRes;
+        newStats.energyRegenerationRate = this.energyRegenerationRate;
         return newStats;
     }
 }
