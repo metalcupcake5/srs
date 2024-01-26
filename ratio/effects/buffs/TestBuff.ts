@@ -9,18 +9,12 @@ import { Stats } from "../../system/Stats";
 
 export class TestBuff extends StatEffect {
     constructor(player: Player) {
-        super(
-            "Test buff",
-            3,
-            Target.Player,
-            player,
-            TickDownTime.TurnEnd
-        );
+        super("Test buff", 3, EffectType.Buff, Target.Player, player, TickDownTime.TurnEnd);
     }
 
     modifyStats(player: Player): Stats {
         const stats = player.stats.clone();
-        stats.critDamage += 0.10;
+        stats.critDamage += 0.1;
         return stats;
     }
 }

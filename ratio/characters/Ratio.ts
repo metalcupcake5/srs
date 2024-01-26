@@ -68,12 +68,15 @@ export class Ratio extends Character {
             buffedStats = set.modifyStats(buffedStats);
         }
 
+        let target = game.enemies[Math.floor(Math.random() * game.enemies.length)];
+
         let attack = new Attack(
             buffedStats,
             (atk) => {
                 return atk * 1.5;
             },
-            [AttackType.Skill]
+            [AttackType.Skill],
+            target
         );
 
         attack.addModifier(
@@ -106,7 +109,8 @@ export class Ratio extends Character {
             (atk) => {
                 return atk * 2.4;
             },
-            [AttackType.Ultimate]
+            [AttackType.Ultimate],
+            enemy
         );
 
         for (const set of this.relicSets) {
@@ -127,12 +131,15 @@ export class Ratio extends Character {
             buffedStats = set.modifyStats(buffedStats);
         }
 
+        let target = game.enemies[Math.floor(Math.random() * game.enemies.length)];
+
         let attack = new Attack(
             buffedStats,
             (atk) => {
                 return atk * 2.7;
             },
-            [AttackType.Skill]
+            [AttackType.Skill],
+            target
         );
 
         for (const set of this.relicSets) {

@@ -1,3 +1,4 @@
+import { Player } from "../Player";
 import { Stats } from "../Stats";
 import { AttackModifier, AttackModifierType } from "./AttackModifier";
 
@@ -36,17 +37,20 @@ export class Attack {
     stats: Stats;
     types: AttackType[];
     multiplierFunction: (attack: number) => number;
+    target: Player;
 
     constructor(
         attackerStats: Stats,
         multiplierFunction: DamageFunction,
         types: AttackType[],
+        target: Player,
         modifiers = []
     ) {
         this.modifiers = modifiers;
         this.stats = attackerStats;
         this.types = types;
         this.multiplierFunction = multiplierFunction;
+        this.target = target;
     }
 
     addModifier(mod: AttackModifier) {

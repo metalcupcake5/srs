@@ -16,6 +16,7 @@ export class MatrixOfPrescienceEffect extends StatEffect {
         super(
             "Matrix of Prescience",
             3,
+            EffectType.Buff,
             Target.Global,
             player,
             TickDownTime.TurnEnd

@@ -4,6 +4,7 @@ import { Game } from "../../system/Game";
 import { LightCone } from "../../system/LightCone";
 import { Stats } from "../../system/Stats";
 import { Attack, AttackType } from "../../system/attacks/Attack";
+import { EffectType } from "../../system/effects/Effect";
 
 /*
 Increases the wearer's CRIT DMG by 20%.
@@ -33,7 +34,14 @@ export class BaptismOfPureThought extends LightCone {
     }
 
     modifyAttack(game: Game, player: Character, attack: Attack): Attack {
-        // TODO enemy system in attack to add other effects
+        let enemyDebuffs = attack.target.effects.filter(
+            (e) => e.type == EffectType.Debuff
+        );
+
+        let stats = attack.stats.clone();
+
+        stats.critDamage += Math.min(3, enemyDebuffs.length) * 0.08;
+        attack.stats = stats;
 
         if (attack.types.includes(AttackType.Ultimate)) {
             player.addEffect(new Disputation(player));
