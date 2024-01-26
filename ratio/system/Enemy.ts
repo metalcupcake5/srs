@@ -15,7 +15,7 @@ export class Enemy extends Player {
 
     damage(game: Game, damage: number): void {
         if (this.wisemanFolly > 0) {
-            (game.characters[0] as Ratio).followUp();
+            (game.characters[0] as Ratio).followUp(game);
             this.wisemanFolly--;
         }
     }

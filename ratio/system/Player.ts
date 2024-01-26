@@ -1,6 +1,6 @@
 import { Game } from "./Game";
 import { Stats } from "./Stats";
-import { Effect } from "./effects/Effect";
+import { Effect, Target, TickDownTime } from "./effects/Effect";
 
 export abstract class Player {
     name: string;
@@ -31,5 +31,25 @@ export abstract class Player {
 
     addEffect(effect: Effect) {
         this.effects.push(effect);
+    }
+
+    tickDownEffects(game: Game, time: TickDownTime) {
+        for (const effect of this.effects) {
+            if (effect.tickDownTime === time && effect.owner === this) {
+                if (effect.duration < 1) {
+                    if (effect.targetting == Target.Global) {
+                        for (const character of game.characters) {
+                            character.effects = character.effects.filter(
+                                (e) => e != effect
+                            );
+                        }
+                        return;
+                    }
+                    this.effects = this.effects.filter((e) => e != effect);
+                    return;
+                }
+                effect.duration--;
+            }
+        }
     }
 }

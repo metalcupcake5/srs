@@ -13,7 +13,7 @@ export class Ratio extends Character {
     totalDamage: number = 0;
     currentEnergy: number = 0;
     turns: number = 0;
-    lightCone;
+    lightCone: LightCone;
     relicSets: RelicSet[];
     // When Dr. Ratio uses his Skill, for every debuff on the target,
     // his CRIT Rate increases by 2.5% and CRIT DMG by 5%. This effect can stack up to 6 time(s).
@@ -51,14 +51,14 @@ export class Ratio extends Character {
 
         const target = game.getRandomEnemy();
 
-        this.skill();
+        this.skill(game);
 
         if (this.currentEnergy >= this.stats.maxEnergy) {
             this.ult(game);
         }
     }
 
-    skill() {
+    skill(game: Game) {
         let buffedStats = this.stats.clone();
 
         buffedStats.critRate += this.summationStacks * 0.025;
@@ -83,13 +83,13 @@ export class Ratio extends Character {
         for (const set of this.relicSets) {
             attack = set.modifyAttack(attack);
         }
-        attack = this.lightCone.modifyAttack(attack);
+        attack = this.lightCone.modifyAttack(game, this, attack);
 
         let damage = attack.calcDamage();
 
         this.totalDamage += damage;
         this.currentEnergy += 20;
-        this.followUp();
+        this.followUp(game);
     }
 
     ult(game?: Game) {
@@ -112,7 +112,7 @@ export class Ratio extends Character {
         for (const set of this.relicSets) {
             attack = set.modifyAttack(attack);
         }
-        attack = this.lightCone.modifyAttack(attack);
+        attack = this.lightCone.modifyAttack(game, this, attack);
 
         let damage = attack.calcDamage();
 
@@ -120,7 +120,7 @@ export class Ratio extends Character {
         this.currentEnergy = 5;
     }
 
-    followUp() {
+    followUp(game: Game) {
         let buffedStats = this.stats.clone();
 
         for (const set of this.relicSets) {
@@ -138,7 +138,7 @@ export class Ratio extends Character {
         for (const set of this.relicSets) {
             attack = set.modifyAttack(attack);
         }
-        attack = this.lightCone.modifyAttack(attack);
+        attack = this.lightCone.modifyAttack(game, this, attack);
 
         let damage = attack.calcDamage();
 

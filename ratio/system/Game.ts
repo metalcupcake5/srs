@@ -1,6 +1,7 @@
 import { Character } from "./Character";
 import { Enemy } from "./Enemy";
 import { Player } from "./Player";
+import { TickDownTime } from "./effects/Effect";
 
 export class Game {
     totalAV: number = 0;
@@ -47,7 +48,9 @@ export class Game {
         // console.log("running next action");
         const actor: Player = this.queue.shift();
         this.totalAV += actor.actionValue;
+        actor.tickDownEffects(this, TickDownTime.TurnStart);
         actor.act(this);
+        actor.tickDownEffects(this, TickDownTime.TurnEnd);
         for (const c of this.queue) {
             c.actionValue -= actor.actionValue;
         }

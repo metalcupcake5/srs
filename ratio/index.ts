@@ -98,3 +98,4 @@ const ratio = new Ratio(new BaptismOfPureThought(), {
 });
 
 const game = new Game([fx, new Enemy("yeah", 100), new Dummy(), new Dummy()]);
+game.run();
