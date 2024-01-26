@@ -1,5 +1,6 @@
 import { Character } from "../system/Character";
 import { Game } from "../system/Game";
+import { LightCone } from "../system/LightCone";
 import { RelicSet } from "../system/RelicSet";
 import { Rolls, Stats } from "../system/Stats";
 import { Attack, AttackType } from "../system/attacks/Attack";
@@ -18,7 +19,11 @@ export class Ratio extends Character {
     // his CRIT Rate increases by 2.5% and CRIT DMG by 5%. This effect can stack up to 6 time(s).
     summationStacks = 3;
 
-    constructor(lightCone, substats: Rolls, relicSets: RelicSet[]) {
+    constructor(
+        lightCone: LightCone,
+        substats: Rolls,
+        relicSets: RelicSet[] = []
+    ) {
         const stats = new Stats(
             {
                 health: 1048,
@@ -34,10 +39,11 @@ export class Ratio extends Character {
         stats.percentAttack += 0.28;
         stats.percentDefense += 0.125;
 
-        super("Dr. Ratio", lightCone.character(stats));
+        super("Dr. Ratio", stats);
 
         this.lightCone = lightCone;
         this.relicSets = relicSets;
+        lightCone.linkCharacter(this);
     }
 
     act(game: Game): void {

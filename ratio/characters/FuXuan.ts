@@ -1,14 +1,9 @@
 import { MatrixOfPrescienceEffect } from "../effects/buffs/MatrixOfPrescienceEffect";
 import { Character } from "../system/Character";
 import { Game } from "../system/Game";
+import { LightCone } from "../system/LightCone";
 import { RelicSet } from "../system/RelicSet";
 import { Rolls, Stats } from "../system/Stats";
-import { Attack, AttackType } from "../system/attacks/Attack";
-import {
-    AttackModifier,
-    AttackModifierType,
-} from "../system/attacks/AttackModifier";
-import { Effect } from "../system/effects/Effect";
 
 export class FuXuan extends Character {
     totalDamage: number = 0;
@@ -19,7 +14,11 @@ export class FuXuan extends Character {
     matrixTurns = 0;
     matrixEffect = new MatrixOfPrescienceEffect(this);
 
-    constructor(lightCone, substats: Rolls, relicSets: RelicSet[] = []) {
+    constructor(
+        lightCone: LightCone,
+        substats: Rolls,
+        relicSets: RelicSet[] = []
+    ) {
         const stats = new Stats(
             {
                 health: 1475,
@@ -35,19 +34,11 @@ export class FuXuan extends Character {
         stats.percentHealth += 0.18;
         stats.effectRes += 0.1;
 
-        // TODO replace with proper light cone implementation
-
-        // she already shut her eyes s1
-        stats.baseHealth += 1270;
-        stats.baseAttack += 423;
-        stats.baseDefense += 529;
-        stats.percentHealth += 0.24;
-        stats.energyRegenerationRate += 0.12;
-
         super("Fu Xuan", stats);
 
         this.lightCone = lightCone;
         this.relicSets = relicSets;
+        lightCone.linkCharacter(this);
     }
 
     act(game: Game): void {
