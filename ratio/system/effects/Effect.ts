@@ -11,8 +11,6 @@ export enum Target {
 }
 
 export enum TickDownTime {
-    OwnerTurnStart,
-    OwnerTurnEnd,
     TurnStart,
     TurnEnd,
 }

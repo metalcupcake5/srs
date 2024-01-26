@@ -10,7 +10,7 @@ export class MatrixOfPrescienceEffect extends StatEffect {
             3,
             Target.Global,
             player,
-            TickDownTime.OwnerTurnEnd
+            TickDownTime.TurnEnd
         );
     }
 
