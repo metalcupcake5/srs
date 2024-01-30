@@ -24,7 +24,7 @@ export abstract class Effect {
     name: string;
     duration: number;
     type: EffectType;
-    attribute: EffectAttribute;
+    attributes: EffectAttribute[];
     targetting: Target;
     owner: Player;
     tickDownTime: TickDownTime;
@@ -33,7 +33,7 @@ export abstract class Effect {
         name: string,
         duration: number,
         type: EffectType,
-        attribute: EffectAttribute,
+        attributes: EffectAttribute[],
         targetting: Target,
         owner: Player,
         tickDownTime: TickDownTime
@@ -42,10 +42,10 @@ export abstract class Effect {
             this.name,
             this.duration,
             this.type,
-            this.attribute,
+            this.attributes,
             this.targetting,
             this.owner,
             this.tickDownTime,
-        ] = [name, duration, type, attribute, targetting, owner, tickDownTime];
+        ] = [name, duration, type, attributes, targetting, owner, tickDownTime];
     }
 }

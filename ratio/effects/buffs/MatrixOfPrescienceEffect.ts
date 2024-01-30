@@ -1,22 +1,20 @@
-import { EffectType, Target, TickDownTime } from "../../system/effects/Effect";
-import { StatEffect } from "../../system/effects/StatEffect";
+import { Effect, EffectAttribute, EffectType, Target, TickDownTime } from "../../system/effects/Effect";
 import { Player } from "../../system/Player";
 import { Stats } from "../../system/Stats";
 
 /*
-Increases the wearer's Max HP by 24% and Energy Regeneration Rate by 12%. 
-When the wearer's HP is reduced, all allies' DMG dealt increases by 9%, lasting for 2 turn(s).
-At the start of every wave, restores HP to all allies by an amount equal to 80% of their respective lost HP.
-
-TODO middle
+all team members gain the Knowledge effect,
+which increases their respective Max HP by 6% of Fu Xuan's Max HP,
+and increases CRIT Rate by 12%.
 */
 
-export class MatrixOfPrescienceEffect extends StatEffect {
+export class MatrixOfPrescienceEffect extends Effect {
     constructor(player: Player) {
         super(
             "Matrix of Prescience",
             3,
             EffectType.Buff,
+            [EffectAttribute.Stat],
             Target.Global,
             player,
             TickDownTime.TurnEnd

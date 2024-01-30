@@ -1,15 +1,16 @@
 import {
+    Effect,
+    EffectAttribute,
     EffectType,
     Target,
     TickDownTime,
 } from "../../system/effects/Effect";
-import { StatEffect } from "../../system/effects/StatEffect";
 import { Player } from "../../system/Player";
 import { Stats } from "../../system/Stats";
 
-export class TestBuff extends StatEffect {
+export class TestBuff extends Effect {
     constructor(player: Player) {
-        super("Test buff", 3, EffectType.Buff, Target.Player, player, TickDownTime.TurnEnd);
+        super("Test buff", 3, EffectType.Buff, [EffectAttribute.Stat], Target.Player, player, TickDownTime.TurnEnd);
     }
 
     modifyStats(player: Player): Stats {
