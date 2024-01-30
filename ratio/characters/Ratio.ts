@@ -8,6 +8,7 @@ import {
     AttackModifier,
     AttackModifierType,
 } from "../system/attacks/AttackModifier";
+import { EffectAttribute } from "../system/effects/Effect";
 
 export class Ratio extends Character {
     totalDamage: number = 0;
@@ -59,14 +60,10 @@ export class Ratio extends Character {
     }
 
     skill(game: Game) {
-        let buffedStats = this.stats.clone();
+        let buffedStats = this.preAttackStats(game);
 
         buffedStats.critRate += this.summationStacks * 0.025;
         buffedStats.critDamage += this.summationStacks * 0.05;
-
-        for (const set of this.relicSets) {
-            buffedStats = set.modifyStats(buffedStats);
-        }
 
         let target = game.enemies[Math.floor(Math.random() * game.enemies.length)];
 
@@ -96,11 +93,7 @@ export class Ratio extends Character {
     }
 
     ult(game?: Game) {
-        let buffedStats = this.stats.clone();
-
-        for (const set of this.relicSets) {
-            buffedStats = set.modifyStats(buffedStats);
-        }
+        let buffedStats = this.preAttackStats(game);
 
         let enemy = game.enemies[0];
         enemy.wisemanFolly = 2;
@@ -125,11 +118,7 @@ export class Ratio extends Character {
     }
 
     followUp(game: Game) {
-        let buffedStats = this.stats.clone();
-
-        for (const set of this.relicSets) {
-            buffedStats = set.modifyStats(buffedStats);
-        }
+        let buffedStats = this.preAttackStats(game);
 
         let target = game.enemies[Math.floor(Math.random() * game.enemies.length)];
 
@@ -151,6 +140,23 @@ export class Ratio extends Character {
 
         this.totalDamage += damage;
         this.currentEnergy += 5;
+    }
+
+    preAttackStats(game: Game): Stats {
+        let buffedStats = this.stats.clone();
+
+        for (const set of this.relicSets) {
+            buffedStats = set.modifyStats(buffedStats);
+        }
+
+        buffedStats = this.lightCone.modifyCharacterStats(game, buffedStats);
+
+        for (const effect of this.effects) {
+            if(effect.attributes.includes(EffectAttribute.Stat)) {
+                buffedStats = effect.modifyStats(buffedStats);
+            }
+        }
+        return buffedStats;
     }
 
     damage(game: Game, damage: number): void {

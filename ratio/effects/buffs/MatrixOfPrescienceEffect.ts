@@ -1,3 +1,4 @@
+import { Attack } from "../../system/attacks/Attack";
 import { Effect, EffectAttribute, EffectType, Target, TickDownTime } from "../../system/effects/Effect";
 import { Player } from "../../system/Player";
 import { Stats } from "../../system/Stats";
@@ -21,11 +22,14 @@ export class MatrixOfPrescienceEffect extends Effect {
         );
     }
 
-    modifyStats(player: Player): Stats {
-        const stats = player.stats.clone();
+    modifyStats(stats: Stats): Stats {
         stats.flatHealth += this.owner.stats.totalHealth() * 0.06;
         stats.critRate += 0.12;
         return stats;
+    }
+
+    modifyAttack(attack: Attack): Attack {
+        return attack;
     }
 
     resetDuration() {

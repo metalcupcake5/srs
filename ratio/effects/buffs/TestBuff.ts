@@ -1,3 +1,4 @@
+import { Attack } from "../../system/attacks/Attack";
 import {
     Effect,
     EffectAttribute,
@@ -13,9 +14,12 @@ export class TestBuff extends Effect {
         super("Test buff", 3, EffectType.Buff, [EffectAttribute.Stat], Target.Player, player, TickDownTime.TurnEnd);
     }
 
-    modifyStats(player: Player): Stats {
-        const stats = player.stats.clone();
+    modifyStats(stats: Stats): Stats {
         stats.critDamage += 0.1;
         return stats;
+    }
+
+    modifyAttack(attack: Attack): Attack {
+        return attack;
     }
 }

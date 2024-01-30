@@ -28,8 +28,8 @@ export class Disputation extends Effect {
         );
     }
 
-    modifyStats(player: Player): Stats {
-        return player.stats;
+    modifyStats(stats: Stats): Stats {
+        return stats;
     }
 
     modifyAttack(attack: Attack): Attack {

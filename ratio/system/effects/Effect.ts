@@ -1,4 +1,6 @@
 import { Player } from "../Player";
+import { Stats } from "../Stats";
+import { Attack } from "../attacks/Attack";
 
 export enum EffectType {
     Buff,
@@ -48,4 +50,7 @@ export abstract class Effect {
             this.tickDownTime,
         ] = [name, duration, type, attributes, targetting, owner, tickDownTime];
     }
+
+    abstract modifyStats(stats: Stats): Stats;
+    abstract modifyAttack(attack: Attack): Attack
 }
