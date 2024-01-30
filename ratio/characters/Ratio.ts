@@ -65,7 +65,8 @@ export class Ratio extends Character {
         buffedStats.critRate += this.summationStacks * 0.025;
         buffedStats.critDamage += this.summationStacks * 0.05;
 
-        let target = game.enemies[Math.floor(Math.random() * game.enemies.length)];
+        let target =
+            game.enemies[Math.floor(Math.random() * game.enemies.length)];
 
         let attack = new Attack(
             buffedStats,
@@ -80,10 +81,7 @@ export class Ratio extends Character {
             new AttackModifier(AttackModifierType.DamageBoost, 0.1 * 3) // a2 trace: 10% damage increase per debuff on target
         );
 
-        for (const set of this.relicSets) {
-            attack = set.modifyAttack(attack);
-        }
-        attack = this.lightCone.modifyAttack(game, this, attack);
+        attack = this.preAttackModifiers(game, attack);
 
         let damage = attack.calcDamage();
 
@@ -106,10 +104,7 @@ export class Ratio extends Character {
             enemy
         );
 
-        for (const set of this.relicSets) {
-            attack = set.modifyAttack(attack);
-        }
-        attack = this.lightCone.modifyAttack(game, this, attack);
+        attack = this.preAttackModifiers(game, attack);
 
         let damage = attack.calcDamage();
 
@@ -120,7 +115,8 @@ export class Ratio extends Character {
     followUp(game: Game) {
         let buffedStats = this.preAttackStats(game);
 
-        let target = game.enemies[Math.floor(Math.random() * game.enemies.length)];
+        let target =
+            game.enemies[Math.floor(Math.random() * game.enemies.length)];
 
         let attack = new Attack(
             buffedStats,
@@ -131,10 +127,7 @@ export class Ratio extends Character {
             target
         );
 
-        for (const set of this.relicSets) {
-            attack = set.modifyAttack(attack);
-        }
-        attack = this.lightCone.modifyAttack(game, this, attack);
+        attack = this.preAttackModifiers(game, attack);
 
         let damage = attack.calcDamage();
 
@@ -152,11 +145,27 @@ export class Ratio extends Character {
         buffedStats = this.lightCone.modifyCharacterStats(game, buffedStats);
 
         for (const effect of this.effects) {
-            if(effect.attributes.includes(EffectAttribute.Stat)) {
+            if (effect.attributes.includes(EffectAttribute.Stat)) {
                 buffedStats = effect.modifyStats(buffedStats);
             }
         }
         return buffedStats;
+    }
+
+    preAttackModifiers(game: Game, attack: Attack): Attack {
+        for (const set of this.relicSets) {
+            attack = set.modifyAttack(attack);
+        }
+
+        attack = this.lightCone.modifyAttack(game, this, attack);
+
+        for (const effect of this.effects) {
+            if (effect.attributes.includes(EffectAttribute.AttackModifier)) {
+                attack = effect.modifyAttack(attack);
+            }
+        }
+
+        return attack;
     }
 
     damage(game: Game, damage: number): void {
