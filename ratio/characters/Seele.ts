@@ -1,3 +1,4 @@
+import { MatrixOfPrescienceEffect } from "../effects/buffs/MatrixOfPrescienceEffect";
 import { Character } from "../system/Character";
 import { Game } from "../system/Game";
 import { LightCone } from "../system/LightCone";
@@ -10,15 +11,12 @@ import {
 } from "../system/attacks/AttackModifier";
 import { EffectAttribute } from "../system/effects/Effect";
 
-export class Ratio extends Character {
+export class Seele extends Character {
     totalDamage: number = 0;
     currentEnergy: number = 0;
     turns: number = 0;
     lightCone: LightCone;
     relicSets: RelicSet[];
-    // When Dr. Ratio uses his Skill, for every debuff on the target,
-    // his CRIT Rate increases by 2.5% and CRIT DMG by 5%. This effect can stack up to 6 time(s).
-    summationStacks = 3;
 
     constructor(
         lightCone: LightCone,
@@ -27,20 +25,20 @@ export class Ratio extends Character {
     ) {
         const stats = new Stats(
             {
-                health: 1048,
-                defense: 461,
-                attack: 776,
-                speed: 103,
-                maxEnergy: 140,
+                health: 931,
+                defense: 364,
+                attack: 640,
+                speed: 115,
+                maxEnergy: 120,
             },
             substats
         );
         // sub traces
-        stats.critRate += 0.12;
+        stats.critDamage += 0.24;
         stats.percentAttack += 0.28;
         stats.percentDefense += 0.125;
 
-        super("Dr. Ratio", stats);
+        super("Seele", stats);
 
         this.lightCone = lightCone;
         this.relicSets = relicSets;
@@ -50,85 +48,66 @@ export class Ratio extends Character {
     act(game: Game): void {
         this.turns++;
 
-        this.skill(game);
+        this.basic(game);
 
         if (this.currentEnergy >= this.stats.maxEnergy) {
             this.ult(game);
         }
     }
 
-    skill(game: Game) {
+    basic(game: Game) {
         let buffedStats = this.preAttackStats(game);
-
-        buffedStats.critRate += this.summationStacks * 0.025;
-        buffedStats.critDamage += this.summationStacks * 0.05;
 
         let target = game.getRandomEnemy();
 
+        // lvl 5
         let attack = new Attack(
             buffedStats,
             (atk) => {
-                return atk * 1.5;
+                return atk * 1;
             },
-            [AttackType.Skill],
+            [AttackType.Basic],
             target
+        );
+
+        // lvl 6 attack
+        // let attack = new Attack(
+        //     buffedStats,
+        //     (atk) => {
+        //         return atk * 1;
+        //     },
+        //     [AttackType.Skill],
+        //     target
+        // );
+
+        attack = this.preAttackModifiers(game, attack);
+
+        attack.addModifier(
+            new AttackModifier(AttackModifierType.DamageBoost, 0.488) // qua orb
         );
 
         attack.addModifier(
-            new AttackModifier(AttackModifierType.DamageBoost, 0.1 * 3) // a2 trace: 10% damage increase per debuff on target
+            new AttackModifier(AttackModifierType.DamageReduction, 0.1) // non break
         );
 
-        attack = this.preAttackModifiers(game, attack);
+        attack.addModifier(
+            new AttackModifier(AttackModifierType.Resistance, 0.2) // qua weak
+        );
 
         let damage = attack.calcDamage();
+
+        console.log(`${damage} dmg by seele`);
 
         this.totalDamage += damage;
         this.currentEnergy += 20;
-        this.followUp(game);
+    }
+
+    skill(game: Game) {
+        this.currentEnergy += 30;
     }
 
     ult(game?: Game) {
-        let buffedStats = this.preAttackStats(game);
-
-        let enemy = game.enemies[0];
-        enemy.wisemanFolly = 2;
-        let attack = new Attack(
-            buffedStats,
-            (atk) => {
-                return atk * 2.4;
-            },
-            [AttackType.Ultimate],
-            enemy
-        );
-
-        attack = this.preAttackModifiers(game, attack);
-
-        let damage = attack.calcDamage();
-
-        this.totalDamage += damage;
         this.currentEnergy = 5;
-    }
-
-    followUp(game: Game) {
-        let buffedStats = this.preAttackStats(game);
-
-        let target = game.getRandomEnemy();
-
-        let attack = new Attack(
-            buffedStats,
-            (atk) => {
-                return atk * 2.7;
-            },
-            [AttackType.Skill],
-            target
-        );
-
-        attack = this.preAttackModifiers(game, attack);
-
-        let damage = attack.calcDamage();
-
-        this.totalDamage += damage;
-        this.currentEnergy += 5;
     }
 
     preAttackStats(game: Game): Stats {
@@ -168,16 +147,9 @@ export class Ratio extends Character {
         throw new Error("Method not implemented.");
     }
 
-    /*
-        pretty sure summation isn't an effect but just in case
-    */
-    // addSummationStacks() {
-    //     this.summationStacks = Math.min(6, this.summationStacks + 3);
-    // }
-
     printTotalDamage() {
         console.log(
-            `total damage by ratio: ${this.totalDamage} in ${
+            `total damage by seele: ${this.totalDamage} in ${
                 this.turns
             } turns | dmg/turn: ${Math.floor(this.totalDamage / this.turns)}`
         );

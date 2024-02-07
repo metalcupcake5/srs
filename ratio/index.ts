@@ -5,6 +5,10 @@ import { Game } from "./system/Game";
 import { SheAlreadyShutHerEyes } from "./lightcones/preservation/SheAlreadyShutHerEyes";
 import { Ratio } from "./characters/Ratio";
 import { BaptismOfPureThought } from "./lightcones/hunt/BaptismOfPureThought";
+import { Seele } from "./characters/Seele";
+import { InTheNight } from "./lightcones/hunt/InTheNight";
+import { Stats } from "./system/Stats";
+import { Attack, AttackType } from "./system/attacks/Attack";
 
 function percentDifference(value, original) {
     return Math.floor(((value - original) / original) * 10000) / 100;
@@ -83,19 +87,35 @@ function planarTests() {
 
 */
 
-const fx = new FuXuan(new SheAlreadyShutHerEyes(), {
+const seele = new Seele(new InTheNight(), {
     percentAttack: 2,
     speed: 2,
     critRate: 7,
     critDamage: 12,
 });
 
-const ratio = new Ratio(new BaptismOfPureThought(), {
-    percentAttack: 2,
-    speed: 2,
-    critRate: 7,
-    critDamage: 12,
-});
+let stats = new Stats({});
+stats.baseAttack = 3066;
+stats.critDamage = 1.226;
+stats.critRate = 0.663;
+stats.speed = 126;
 
-const game = new Game([fx, new Enemy("yeah", 100), new Dummy(), new Dummy()]);
+seele.stats = stats;
+
+const atk = new Attack(
+    stats,
+    (atk: number) => {
+        return 0.9 * atk;
+    },
+    [AttackType.Basic],
+    new Dummy(),
+    []
+);
+
+const game = new Game([
+    seele,
+    new Enemy("yeah", 100),
+    new Dummy(),
+    new Dummy(),
+]);
 game.run();

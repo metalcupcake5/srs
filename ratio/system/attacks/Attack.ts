@@ -76,7 +76,9 @@ export class Attack {
             reduction: this.getModifierTotal(AttackModifierType.DefenseDown),
         });
         let resMultiplier =
-            1 + this.getModifierTotal(AttackModifierType.ResistanceReduction);
+            1 -
+            (this.getModifierTotal(AttackModifierType.Resistance) -
+                this.getModifierTotal(AttackModifierType.ResistanceReduction));
         let vulnMultiplier =
             1 + this.getModifierTotal(AttackModifierType.Vulnerability);
         let dmgReductionMultiplier = this.modifiers
@@ -85,6 +87,7 @@ export class Attack {
                 (accumulator, current) => (accumulator *= 1 - current.value),
                 1
             );
+        let brokenMultiplier = 0.9;
 
         let finalDamage =
             base *
@@ -93,7 +96,8 @@ export class Attack {
             defMultiplier *
             resMultiplier *
             vulnMultiplier *
-            dmgReductionMultiplier;
+            dmgReductionMultiplier *
+            brokenMultiplier;
 
         // console.log(`damage: ${this.stats.critDamage}`);
 

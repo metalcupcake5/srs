@@ -4,6 +4,7 @@ export enum AttackModifierType {
     DamageBoost,
     Weaken,
     DefenseDown,
+    Resistance,
     ResistanceReduction,
     Vulnerability,
     DamageReduction,
