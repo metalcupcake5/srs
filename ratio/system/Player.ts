@@ -36,19 +36,17 @@ export abstract class Player {
     tickDownEffects(game: Game, time: TickDownTime) {
         for (const effect of this.effects) {
             if (effect.tickDownTime === time && effect.owner === this) {
-                if (effect.duration < 1) {
+                effect.duration--;
+                if (effect.duration < 0) {
                     if (effect.targetting == Target.Global) {
                         for (const character of game.characters) {
                             character.effects = character.effects.filter(
                                 (e) => e != effect
                             );
                         }
-                        return;
                     }
                     this.effects = this.effects.filter((e) => e != effect);
-                    return;
                 }
-                effect.duration--;
             }
         }
     }

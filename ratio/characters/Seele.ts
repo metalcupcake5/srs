@@ -1,4 +1,5 @@
 import { MatrixOfPrescienceEffect } from "../effects/buffs/MatrixOfPrescienceEffect";
+import { Action, ActionType } from "../system/Action";
 import { Character } from "../system/Character";
 import { Game } from "../system/Game";
 import { LightCone } from "../system/LightCone";
@@ -96,13 +97,7 @@ export class Seele extends Character {
 
         let damage = attack.calcDamage();
 
-        game.actions.push({
-            av: game.totalAV,
-            name: this.name,
-            action: "basic attack",
-            damage: damage,
-        });
-
+        game.actions.push(new Action(game, this.name, ActionType.Basic, damage))
         this.totalDamage += damage;
         this.currentEnergy += 20;
     }

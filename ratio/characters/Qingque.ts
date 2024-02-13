@@ -1,4 +1,7 @@
+import { HiddenHand } from "../effects/buffs/HiddenHand";
 import { MatrixOfPrescienceEffect } from "../effects/buffs/MatrixOfPrescienceEffect";
+import { QingqueDamageBoost } from "../effects/buffs/QingqueDamageBoost";
+import { Action, ActionType } from "../system/Action";
 import { Character } from "../system/Character";
 import { Game } from "../system/Game";
 import { LightCone } from "../system/LightCone";
@@ -51,12 +54,18 @@ export class Qingque extends Character {
     act(game: Game): void {
         this.turns++;
 
+        let skillCount = 0;
+
         for (let i = 0; i < 3; i++) {
-            console.log(`remaining sp: ${game.skillPoints}`);
             if (game.skillPoints <= 0) {
                 break;
             }
             this.skill(game);
+            skillCount++;
+        }
+
+        if (skillCount >= 3) {
+            this.addEffect(new HiddenHand(this));
         }
 
         if (this.currentEnergy >= this.stats.maxEnergy) {
@@ -64,15 +73,10 @@ export class Qingque extends Character {
         }
 
         this.basic(game);
-        console.log("using basic");
     }
 
     basic(game: Game) {
         let buffedStats = this.preAttackStats(game);
-
-        if (this.hiddenHand) {
-            buffedStats.percentAttack += 0.72; // 4 of a kind buff
-        }
 
         let target = game.getRandomEnemy();
 
@@ -92,21 +96,22 @@ export class Qingque extends Character {
 
         this.totalDamage += damage;
         this.currentEnergy += 20;
-        game.actions.push({
-            av: game.totalAV,
-            name: this.name,
-            action: "basic attack",
-            damage: damage,
-        });
+        game.actions.push(
+            new Action(game, this.name, ActionType.Basic, damage)
+        );
     }
 
     skill(game: Game) {
         game.useSkillPoint();
-        game.actions.push({
-            av: game.totalAV,
-            name: this.name,
-            action: "skill",
-        });
+        game.actions.push(new Action(game, this.name, ActionType.Skill));
+        let filteredEffects = this.effects.filter(
+            (e) => e instanceof QingqueDamageBoost
+        );
+        if (filteredEffects.length > 0) {
+            (filteredEffects[0] as QingqueDamageBoost).addStack();
+            return;
+        }
+        this.addEffect(new QingqueDamageBoost(this));
     }
 
     ult(game?: Game) {

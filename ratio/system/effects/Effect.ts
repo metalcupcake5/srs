@@ -30,6 +30,7 @@ export abstract class Effect {
     targetting: Target;
     owner: Player;
     tickDownTime: TickDownTime;
+    stacks: number;
 
     constructor(
         name: string,
@@ -38,7 +39,8 @@ export abstract class Effect {
         attributes: EffectAttribute[],
         targetting: Target,
         owner: Player,
-        tickDownTime: TickDownTime
+        tickDownTime: TickDownTime,
+        stacks: number = 1
     ) {
         [
             this.name,
@@ -48,7 +50,8 @@ export abstract class Effect {
             this.targetting,
             this.owner,
             this.tickDownTime,
-        ] = [name, duration, type, attributes, targetting, owner, tickDownTime];
+            this.stacks
+        ] = [name, duration, type, attributes, targetting, owner, tickDownTime, stacks];
     }
 
     abstract modifyStats(stats: Stats): Stats;

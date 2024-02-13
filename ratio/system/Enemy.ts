@@ -1,4 +1,5 @@
 // import { Ratio } from "../characters/Ratio";
+import { Action, ActionType } from "./Action";
 import { Game } from "./Game";
 import { Player } from "./Player";
 import { Stats } from "./Stats";
@@ -12,12 +13,7 @@ export class Enemy extends Player {
     }
 
     act(game: Game): void {
-        game.actions.push({
-            av: game.totalAV,
-            name: this.name,
-            action: "attack",
-            damage: 0,
-        });
+        game.actions.push(new Action(game, this.name, ActionType.Damage, 0))
     }
 
     damage(game: Game, damage: number): void {

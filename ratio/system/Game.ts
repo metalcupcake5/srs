@@ -1,9 +1,9 @@
-import EventEmitter = require("events");
+import { Action } from "./Action";
 import { Character } from "./Character";
 import { Enemy } from "./Enemy";
 import { Player } from "./Player";
 import { TickDownTime } from "./effects/Effect";
-import { eventEmitter } from "..";
+import EventEmitter from "eventemitter3";
 
 export class Game {
     totalAV: number = 0;
@@ -15,7 +15,8 @@ export class Game {
     maxAV = 750;
     skillPoints: number = 3;
     maxSkillPoints: number = 5;
-    actions: any[] = [];
+    actions: Action[] = [];
+    eventEmitter = new EventEmitter();
 
     constructor(chars: Player[]) {
         this.players = chars;
@@ -84,14 +85,14 @@ export class Game {
 
     addSkillPoint() {
         if (this.skillPoints < this.maxSkillPoints) {
-            eventEmitter.emit("skillPointGain", this);
+            this.eventEmitter.emit("skillPointGain", this);
             this.skillPoints++;
         }
     }
 
     useSkillPoint() {
         if (this.skillPoints > 0) {
-            eventEmitter.emit("skillPointUse", this);
+            this.eventEmitter.emit("skillPointUse", this);
             this.skillPoints--;
         }
     }

@@ -1,4 +1,5 @@
 import { MatrixOfPrescienceEffect } from "../effects/buffs/MatrixOfPrescienceEffect";
+import { Action, ActionType } from "../system/Action";
 import { Character } from "../system/Character";
 import { Game } from "../system/Game";
 import { LightCone } from "../system/LightCone";
@@ -48,39 +49,31 @@ export class FuXuan extends Character {
 
         if (this.matrixEffect.duration < 1) {
             this.skill(game);
+            return;
         }
 
-        if (this.currentEnergy >= this.stats.maxEnergy) {
-            this.ult(game);
-        }
+        this.basic(game);
+
+        // if (this.currentEnergy >= this.stats.maxEnergy) {
+        //     this.ult(game);
+        // }
     }
 
     basic(game: Game) {
         game.addSkillPoint();
-        game.actions.push({
-            av: game.totalAV,
-            name: this.name,
-            action: "basic attack",
-        });
+        game.actions.push(new Action(game, this.name, ActionType.Basic));
     }
 
     skill(game: Game) {
         this.matrixEffect.resetDuration();
         for (let char of game.characters) {
-            if (char.effects.includes(this.matrixEffect)) {
-                console.log(`${char.name} already had effect`);
-            }
             if (!char.effects.includes(this.matrixEffect)) {
                 char.addEffect(this.matrixEffect);
             }
         }
         this.currentEnergy += 50;
-        game.actions.push({
-            av: game.totalAV,
-            name: this.name,
-            action: "skill",
-        });
         game.useSkillPoint();
+        game.actions.push(new Action(game, this.name, ActionType.Skill));
     }
 
     ult(game?: Game) {

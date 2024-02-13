@@ -9,7 +9,8 @@ import { Seele } from "./characters/Seele";
 import { InTheNight } from "./lightcones/hunt/InTheNight";
 import { Stats } from "./system/Stats";
 import { Attack, AttackType } from "./system/attacks/Attack";
-import EventEmitter = require("events");
+import { EventEmitter } from "node:events";
+import { Qingque } from "./characters/Qingque";
 
 function percentDifference(value, original) {
     return Math.floor(((value - original) / original) * 10000) / 100;
@@ -90,35 +91,19 @@ function planarTests() {
 
 */
 
-const seele = new Seele(new InTheNight(), {
+const qq = new Qingque(new InTheNight(), {
     percentAttack: 2,
     speed: 2,
     critRate: 7,
     critDamage: 12,
 });
 
-let stats = new Stats({});
-stats.baseAttack = 3066;
-stats.critDamage = 1.226;
-stats.critRate = 0.663;
-stats.speed = 126;
-
-seele.stats = stats;
-
-const atk = new Attack(
-    stats,
-    (atk: number) => {
-        return 0.9 * atk;
-    },
-    [AttackType.Basic],
-    new Dummy(),
-    []
-);
-
-const game = new Game([
-    seele,
-    new Enemy("yeah", 100),
-    new Dummy(),
-    new Dummy(),
-]);
+const game = new Game([qq, new Enemy("yeah", 100), new Dummy(), new Dummy()]);
 game.run();
+for (let line of game.actions) {
+    console.log(
+        `${(Math.floor(line.av * 100) / 100).toFixed(2)} | ${line.name} | ${
+            line.action
+        } | ${line.damage || "n/a"}`
+    );
+}

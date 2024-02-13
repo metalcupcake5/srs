@@ -8,6 +8,9 @@ dependencies:
   '@types/node':
     specifier: ^20.11.6
     version: 20.11.6
+  eventemitter3:
+    specifier: ^5.0.1
+    version: 5.0.1
 
 devDependencies:
   typescript:
@@ -20,6 +23,10 @@ packages:
     resolution: {integrity: sha512-+EOokTnksGVgip2PbYbr3xnR7kZigh4LbybAfBAw5BpnQ+FqBYUsvCEjYd70IXKlbohQ64mzEYmMtlWUY8q//Q==}
     dependencies:
       undici-types: 5.26.5
+    dev: false
+
+  /eventemitter3@5.0.1:
+    resolution: {integrity: sha512-GWkBvjiSZK87ELrYOSESUYeVIc9mvLLf/nXalMOS5dYrgZq9o5OVkbZAVM06CVxYsCwH9BDZFPlQTlPA1j4ahA==}
     dev: false
 
   /typescript@5.3.2:
