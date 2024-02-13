@@ -56,6 +56,7 @@ export class FuXuan extends Character {
     }
 
     skill(game: Game) {
+        this.matrixEffect.resetDuration();
         for (let char of game.characters) {
             if (char.effects.includes(this.matrixEffect)) {
                 console.log(`${char.name} already had effect`);

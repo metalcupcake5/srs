@@ -1,5 +1,11 @@
 import { Attack } from "../../system/attacks/Attack";
-import { Effect, EffectAttribute, EffectType, Target, TickDownTime } from "../../system/effects/Effect";
+import {
+    Effect,
+    EffectAttribute,
+    EffectType,
+    Target,
+    TickDownTime,
+} from "../../system/effects/Effect";
 import { Player } from "../../system/Player";
 import { Stats } from "../../system/Stats";
 
@@ -13,7 +19,7 @@ export class MatrixOfPrescienceEffect extends Effect {
     constructor(player: Player) {
         super(
             "Matrix of Prescience",
-            3,
+            0,
             EffectType.Buff,
             [EffectAttribute.Stat],
             Target.Global,

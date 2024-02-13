@@ -95,7 +95,7 @@ export class Qingque extends Character {
     }
 
     skill(game: Game) {
-        game.removeSkillPoint();
+        game.useSkillPoint();
     }
 
     ult(game?: Game) {
