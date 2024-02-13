@@ -44,8 +44,15 @@ export class Stats {
     maxEnergy: number;
     breakEffect: number = 0;
     effectHitRate: number = 0;
-    energyRegenerationRate: number = 0;
     effectRes: number = 0;
+    energyRegenerationRate: number = 0;
+    physicalDamageBoost: number = 0;
+    fireDamageBoost: number = 0;
+    iceDamageBoost: number = 0;
+    lightningDamageBoost: number = 0;
+    windDamageBoost: number = 0;
+    quantumDamageBoost: number = 0;
+    imaginaryDamageBoost: number = 0;
 
     constructor(
         {
@@ -135,6 +142,13 @@ export class Stats {
         newStats.effectHitRate = this.effectHitRate;
         newStats.effectRes = this.effectRes;
         newStats.energyRegenerationRate = this.energyRegenerationRate;
+        newStats.physicalDamageBoost = this.physicalDamageBoost;
+        newStats.fireDamageBoost = this.fireDamageBoost;
+        newStats.iceDamageBoost = this.iceDamageBoost;
+        newStats.lightningDamageBoost = this.lightningDamageBoost;
+        newStats.windDamageBoost = this.windDamageBoost;
+        newStats.quantumDamageBoost = this.quantumDamageBoost;
+        newStats.imaginaryDamageBoost = this.imaginaryDamageBoost;
         return newStats;
     }
 }

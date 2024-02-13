@@ -9,6 +9,7 @@ import { Seele } from "./characters/Seele";
 import { InTheNight } from "./lightcones/hunt/InTheNight";
 import { Stats } from "./system/Stats";
 import { Attack, AttackType } from "./system/attacks/Attack";
+import EventEmitter = require("events");
 
 function percentDifference(value, original) {
     return Math.floor(((value - original) / original) * 10000) / 100;
@@ -17,6 +18,8 @@ function percentDifference(value, original) {
 const turns = 10;
 
 const results = [];
+
+export const eventEmitter: EventEmitter = new EventEmitter();
 
 /* old tests with old system
 function lightConeTests() {
