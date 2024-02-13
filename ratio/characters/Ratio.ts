@@ -2,7 +2,7 @@ import { Character } from "../system/Character";
 import { Game } from "../system/Game";
 import { LightCone } from "../system/LightCone";
 import { RelicSet } from "../system/RelicSet";
-import { Rolls, Stats } from "../system/Stats";
+import { type Rolls, Stats } from "../system/Stats";
 import { Attack, AttackType } from "../system/attacks/Attack";
 import {
     AttackModifier,
@@ -87,7 +87,7 @@ export class Ratio extends Character {
         this.followUp(game);
     }
 
-    ult(game?: Game) {
+    ult(game: Game) {
         let buffedStats = this.preAttackStats(game);
 
         let enemy = game.enemies[0];

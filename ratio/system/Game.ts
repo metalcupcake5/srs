@@ -13,8 +13,9 @@ export class Game {
     queue: Player[];
     print: boolean = false;
     maxAV = 750;
-    skillPoints: number = 0;
+    skillPoints: number = 3;
     maxSkillPoints: number = 5;
+    actions: any[] = [];
 
     constructor(chars: Player[]) {
         this.players = chars;

@@ -1,11 +1,13 @@
-import { eventEmitter } from "..";
 import { Character } from "../system/Character";
 import { Game } from "../system/Game";
 import { LightCone } from "../system/LightCone";
 import { RelicSet } from "../system/RelicSet";
-import { Rolls, Stats } from "../system/Stats";
+import { type Rolls, Stats } from "../system/Stats";
 import { Attack } from "../system/attacks/Attack";
 import { EffectAttribute } from "../system/effects/Effect";
+
+
+// TODO subscribe to skill point event
 
 export class Sparkle extends Character {
     totalDamage: number = 0;
@@ -43,9 +45,9 @@ export class Sparkle extends Character {
 
         game.maxSkillPoints += 2;
 
-        eventEmitter.on("skillPointUse", (game: Game) => {
-            this.talent(game);
-        });
+        // eventEmitter.on("skillPointUse", (game: Game) => {
+        //     this.talent(game);
+        // });
     }
 
     act(game: Game): void {

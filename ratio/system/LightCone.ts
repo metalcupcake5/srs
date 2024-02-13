@@ -5,13 +5,13 @@ import { Attack } from "./attacks/Attack";
 
 export abstract class LightCone {
     name: string;
-    character: Character;
+    character?: Character;
     health: number;
     attack: number;
     defense: number;
 
     constructor(
-        name,
+        name: string,
         stats: {
             health: number;
             attack: number;

@@ -1,12 +1,12 @@
 import { Character } from "../system/Character";
 import { Game } from "../system/Game";
-import { Rolls, Stats } from "../system/Stats";
+import { Stats } from "../system/Stats";
 
 export class Dummy extends Character {
     totalDamage: number = 0;
     currentEnergy: number = 0;
     turns: number = 0;
-    lightCone;
+    // lightCone;
 
     constructor() {
         const stats = new Stats(
@@ -27,6 +27,13 @@ export class Dummy extends Character {
         this.turns++;
         const target = game.getRandomEnemy();
         target.damage(game, 1);
+        game.addSkillPoint();
+        game.actions.push({
+            av: game.totalAV,
+            name: this.name,
+            action: "damage",
+            damage: 1,
+        });
     }
 
     damage(game: Game, damage: number): void {

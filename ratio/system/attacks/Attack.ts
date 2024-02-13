@@ -17,7 +17,7 @@ function defReductionFormula({
     );
 }
 
-function crit(damage, critRate, critDamage) {
+function crit(damage: number, critRate: number, critDamage: number) {
     return Math.floor(
         damage * (1 + critDamage) * critRate + damage * (1 - critRate)
     );

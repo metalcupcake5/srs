@@ -1,4 +1,4 @@
-import { Ratio } from "../characters/Ratio";
+// import { Ratio } from "../characters/Ratio";
 import { Game } from "./Game";
 import { Player } from "./Player";
 import { Stats } from "./Stats";
@@ -11,12 +11,19 @@ export class Enemy extends Player {
         super(name, speed, new Stats({ speed: speed }));
     }
 
-    act(game: Game): void {}
+    act(game: Game): void {
+        game.actions.push({
+            av: game.totalAV,
+            name: this.name,
+            action: "attack",
+            damage: 0,
+        });
+    }
 
     damage(game: Game, damage: number): void {
-        if (this.wisemanFolly > 0) {
-            (game.characters[0] as Ratio).followUp(game);
-            this.wisemanFolly--;
-        }
+        // if (this.wisemanFolly > 0) {
+        //     (game.characters[0] as Ratio).followUp(game);
+        //     this.wisemanFolly--;
+        // }
     }
 }

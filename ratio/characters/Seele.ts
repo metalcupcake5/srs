@@ -3,7 +3,7 @@ import { Character } from "../system/Character";
 import { Game } from "../system/Game";
 import { LightCone } from "../system/LightCone";
 import { RelicSet } from "../system/RelicSet";
-import { Rolls, Stats } from "../system/Stats";
+import { type Rolls, Stats } from "../system/Stats";
 import { Attack, AttackType } from "../system/attacks/Attack";
 import {
     AttackModifier,
@@ -96,7 +96,12 @@ export class Seele extends Character {
 
         let damage = attack.calcDamage();
 
-        console.log(`${damage} dmg by seele`);
+        game.actions.push({
+            av: game.totalAV,
+            name: this.name,
+            action: "basic attack",
+            damage: damage,
+        });
 
         this.totalDamage += damage;
         this.currentEnergy += 20;

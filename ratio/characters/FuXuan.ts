@@ -3,7 +3,7 @@ import { Character } from "../system/Character";
 import { Game } from "../system/Game";
 import { LightCone } from "../system/LightCone";
 import { RelicSet } from "../system/RelicSet";
-import { Rolls, Stats } from "../system/Stats";
+import { type Rolls, Stats } from "../system/Stats";
 
 export class FuXuan extends Character {
     totalDamage: number = 0;
@@ -46,13 +46,22 @@ export class FuXuan extends Character {
 
         const target = game.getRandomEnemy();
 
-        if (!this.matrixEffect || this.matrixEffect.duration < 1) {
+        if (this.matrixEffect.duration < 1) {
             this.skill(game);
         }
 
         if (this.currentEnergy >= this.stats.maxEnergy) {
             this.ult(game);
         }
+    }
+
+    basic(game: Game) {
+        game.addSkillPoint();
+        game.actions.push({
+            av: game.totalAV,
+            name: this.name,
+            action: "basic attack",
+        });
     }
 
     skill(game: Game) {
@@ -66,6 +75,12 @@ export class FuXuan extends Character {
             }
         }
         this.currentEnergy += 50;
+        game.actions.push({
+            av: game.totalAV,
+            name: this.name,
+            action: "skill",
+        });
+        game.useSkillPoint();
     }
 
     ult(game?: Game) {
