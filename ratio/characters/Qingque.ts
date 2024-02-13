@@ -18,7 +18,6 @@ import { EffectAttribute } from "../system/effects/Effect";
 
 export class Qingque extends Character {
     totalDamage: number = 0;
-    currentEnergy: number = 0;
     turns: number = 0;
     lightCone: LightCone;
     relicSets: RelicSet[];
@@ -97,13 +96,13 @@ export class Qingque extends Character {
         this.totalDamage += damage;
         this.currentEnergy += 20;
         game.actions.push(
-            new Action(game, this.name, ActionType.Basic, damage)
+            new Action(game, this, ActionType.Basic, damage)
         );
     }
 
     skill(game: Game) {
         game.useSkillPoint();
-        game.actions.push(new Action(game, this.name, ActionType.Skill));
+        game.actions.push(new Action(game, this, ActionType.Skill));
         let filteredEffects = this.effects.filter(
             (e) => e instanceof QingqueDamageBoost
         );

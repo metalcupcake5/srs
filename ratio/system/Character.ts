@@ -3,6 +3,8 @@ import { Player } from "./Player";
 import { Stats } from "./Stats";
 
 export abstract class Character extends Player {
+    currentEnergy: number = 0;
+
     constructor(name: string, stats: Stats) {
         super(name, stats.speed, stats);
     }

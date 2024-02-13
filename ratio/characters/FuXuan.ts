@@ -8,7 +8,6 @@ import { type Rolls, Stats } from "../system/Stats";
 
 export class FuXuan extends Character {
     totalDamage: number = 0;
-    currentEnergy: number = 0;
     turns: number = 0;
     lightCone: LightCone;
     relicSets: RelicSet[];
@@ -61,7 +60,7 @@ export class FuXuan extends Character {
 
     basic(game: Game) {
         game.addSkillPoint();
-        game.actions.push(new Action(game, this.name, ActionType.Basic));
+        game.actions.push(new Action(game, this, ActionType.Basic));
     }
 
     skill(game: Game) {
@@ -73,7 +72,7 @@ export class FuXuan extends Character {
         }
         this.currentEnergy += 50;
         game.useSkillPoint();
-        game.actions.push(new Action(game, this.name, ActionType.Skill));
+        game.actions.push(new Action(game, this, ActionType.Skill));
     }
 
     ult(game?: Game) {

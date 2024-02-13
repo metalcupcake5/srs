@@ -14,7 +14,6 @@ import { EffectAttribute } from "../system/effects/Effect";
 
 export class Seele extends Character {
     totalDamage: number = 0;
-    currentEnergy: number = 0;
     turns: number = 0;
     lightCone: LightCone;
     relicSets: RelicSet[];
@@ -97,7 +96,7 @@ export class Seele extends Character {
 
         let damage = attack.calcDamage();
 
-        game.actions.push(new Action(game, this.name, ActionType.Basic, damage))
+        game.actions.push(new Action(game, this, ActionType.Basic, damage))
         this.totalDamage += damage;
         this.currentEnergy += 20;
     }

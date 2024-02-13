@@ -1,4 +1,6 @@
+import { Character } from "./Character";
 import { Game } from "./Game";
+import { Player } from "./Player";
 
 export enum ActionType {
     Basic = "basic attack",
@@ -13,13 +15,15 @@ export class Action {
     action: ActionType;
     damage: number;
     skillPoints: number;
+    energy: number;
 
-    constructor(game: Game, charName: string, action: ActionType, damage = 0, ) {
+    constructor(game: Game, character: Player, action: ActionType, damage = 0, ) {
         this.av = game.totalAV;
-        this.name = charName;
+        this.name = character.name;
         this.action = action;
         this.damage = damage;
         this.skillPoints = game.skillPoints;
+        this.energy = (character instanceof Character) ? (character as Character).currentEnergy : 0;
     }
 }
 

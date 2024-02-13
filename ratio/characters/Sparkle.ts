@@ -11,7 +11,6 @@ import { EffectAttribute } from "../system/effects/Effect";
 
 export class Sparkle extends Character {
     totalDamage: number = 0;
-    currentEnergy: number = 0;
     turns: number = 0;
     lightCone: LightCone;
     relicSets: RelicSet[];
