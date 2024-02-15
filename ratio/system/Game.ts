@@ -44,10 +44,11 @@ export class Game {
             // this.printActionValues();
         }
 
-        // for (const c of this.characters) {
-        //     c.printTotalDamage();
-        // }
-        return this.characters[0].printTotalDamage();
+        for (const c of this.characters) {
+            c.printTotalDamage();
+        }
+        return;
+        // return this.characters[0].printTotalDamage();
     }
 
     act() {

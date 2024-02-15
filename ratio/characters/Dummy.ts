@@ -37,7 +37,7 @@ export class Dummy extends Character {
 
     printTotalDamage() {
         console.log(
-            `total damage by ratio: ${this.totalDamage} in ${
+            `total damage by dummy: ${this.totalDamage} in ${
                 this.turns
             } turns | dmg/turn: ${Math.floor(this.totalDamage / this.turns)}`
         );
