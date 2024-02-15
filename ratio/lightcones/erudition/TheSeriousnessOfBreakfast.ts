@@ -36,7 +36,11 @@ export class TheSeriousnessOfBreakfast extends LightCone {
 
     modifyAttack(game: Game, player: Character, attack: Attack): Attack {
         attack.addModifier(
-            new AttackModifier(AttackModifierType.DamageBoost, 0.24) // 24 at s5
+            new AttackModifier(
+                AttackModifierType.DamageBoost,
+                0.24, // 24 at s5
+                "seriousness of breakfast"
+            )
         );
 
         return attack;

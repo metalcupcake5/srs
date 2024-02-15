@@ -13,9 +13,11 @@ export enum AttackModifierType {
 export class AttackModifier {
     type: AttackModifierType;
     value: number;
+    tag: string;
 
-    constructor(type: AttackModifierType, value: number) {
+    constructor(type: AttackModifierType, value: number, tag: string = "") {
         this.type = type;
         this.value = value;
+        this.tag = tag;
     }
 }

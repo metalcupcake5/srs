@@ -1,11 +1,14 @@
-import { Character } from "../system/Character";
+import { Character, Element } from "../system/Character";
 import { Game } from "../system/Game";
 import { LightCone } from "../system/LightCone";
 import { RelicSet } from "../system/RelicSet";
 import { type Rolls, Stats } from "../system/Stats";
 import { Attack } from "../system/attacks/Attack";
+import {
+    AttackModifier,
+    AttackModifierType,
+} from "../system/attacks/AttackModifier";
 import { EffectAttribute } from "../system/effects/Effect";
-
 
 // TODO subscribe to skill point event
 
@@ -36,7 +39,7 @@ export class Sparkle extends Character {
         stats.quantumDamageBoost += 0.144;
         stats.percentDefense += 0.125;
 
-        super("Qingque", stats);
+        super("Sparkle", stats, Element.Quantum);
 
         this.lightCone = lightCone;
         this.relicSets = relicSets;
@@ -79,7 +82,7 @@ export class Sparkle extends Character {
     }
 
     talent(game?: Game) {
-        // Whenever an ally consumes 1 Skill Point, all allies' DMG increases by 6%. 
+        // Whenever an ally consumes 1 Skill Point, all allies' DMG increases by 6%.
         // This effect lasts for 2 turn(s) and can stack up to 3 time(s).
     }
 
@@ -112,6 +115,14 @@ export class Sparkle extends Character {
                 attack = effect.modifyAttack(attack);
             }
         }
+
+        attack.addModifier(
+            new AttackModifier(
+                AttackModifierType.DamageBoost,
+                this.stats[`${this.element}DamageBoost`],
+                "stat damage boost"
+            )
+        );
 
         return attack;
     }

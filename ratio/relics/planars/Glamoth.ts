@@ -24,7 +24,8 @@ export class Glamoth extends PlanarSet {
             attack.addModifier(
                 new AttackModifier(
                     AttackModifierType.DamageBoost,
-                    speed >= 160 ? 0.18 : 0.12
+                    speed >= 160 ? 0.18 : 0.12,
+                    "glamoth"
                 )
             );
         }

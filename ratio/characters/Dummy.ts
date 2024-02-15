@@ -1,5 +1,5 @@
 import { Action, ActionType } from "../system/Action";
-import { Character } from "../system/Character";
+import { Character, Element } from "../system/Character";
 import { Game } from "../system/Game";
 import { Stats } from "../system/Stats";
 
@@ -20,7 +20,7 @@ export class Dummy extends Character {
             {}
         );
 
-        super("dummy test char", stats);
+        super("dummy test char", stats, Element.Physical);
     }
 
     act(game: Game): void {
@@ -28,7 +28,7 @@ export class Dummy extends Character {
         const target = game.getRandomEnemy();
         target.damage(game, 1);
         game.addSkillPoint();
-        game.actions.push(new Action(game, this, ActionType.Damage, 1))
+        game.actions.push(new Action(game, this, ActionType.Damage, 1));
     }
 
     damage(game: Game, damage: number): void {

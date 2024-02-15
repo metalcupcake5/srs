@@ -23,7 +23,11 @@ export class Wastelander extends RelicSet {
     modifyAttack(attack: Attack): Attack {
         // assumes always imaginary damage
         attack.addModifier(
-            new AttackModifier(AttackModifierType.DamageBoost, 0.1)
+            new AttackModifier(
+                AttackModifierType.DamageBoost,
+                0.1,
+                "wastelander"
+            )
         );
 
         return attack;

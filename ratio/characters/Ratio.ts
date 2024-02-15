@@ -1,4 +1,4 @@
-import { Character } from "../system/Character";
+import { Character, Element } from "../system/Character";
 import { Game } from "../system/Game";
 import { LightCone } from "../system/LightCone";
 import { RelicSet } from "../system/RelicSet";
@@ -39,7 +39,7 @@ export class Ratio extends Character {
         stats.percentAttack += 0.28;
         stats.percentDefense += 0.125;
 
-        super("Dr. Ratio", stats);
+        super("Dr. Ratio", stats, Element.Imaginary);
 
         this.lightCone = lightCone;
         this.relicSets = relicSets;
@@ -65,6 +65,7 @@ export class Ratio extends Character {
         let target = game.getRandomEnemy();
 
         let attack = new Attack(
+            this.element,
             buffedStats,
             (atk) => {
                 return atk * 1.5;
@@ -92,6 +93,7 @@ export class Ratio extends Character {
         let enemy = game.enemies[0];
         enemy.wisemanFolly = 2;
         let attack = new Attack(
+            this.element,
             buffedStats,
             (atk) => {
                 return atk * 2.4;
@@ -114,6 +116,7 @@ export class Ratio extends Character {
         let target = game.getRandomEnemy();
 
         let attack = new Attack(
+            this.element,
             buffedStats,
             (atk) => {
                 return atk * 2.7;
@@ -159,6 +162,14 @@ export class Ratio extends Character {
                 attack = effect.modifyAttack(attack);
             }
         }
+
+        attack.addModifier(
+            new AttackModifier(
+                AttackModifierType.DamageBoost,
+                this.stats[`${this.element}DamageBoost`],
+                "stat damage boost"
+            )
+        );
 
         return attack;
     }

@@ -25,7 +25,11 @@ export class Rutilant extends PlanarSet {
                 attack.types.includes(AttackType.Skill)
             ) {
                 attack.addModifier(
-                    new AttackModifier(AttackModifierType.DamageBoost, 0.2)
+                    new AttackModifier(
+                        AttackModifierType.DamageBoost,
+                        0.2,
+                        "rutilant"
+                    )
                 );
             }
         }

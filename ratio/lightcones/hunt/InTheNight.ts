@@ -50,7 +50,8 @@ export class InTheNight extends LightCone {
             attack.addModifier(
                 new AttackModifier(
                     AttackModifierType.DamageBoost,
-                    Math.min(6, 0.06 * Math.floor((stats.speed - 100) / 10))
+                    Math.min(6, 0.06 * Math.floor((stats.speed - 100) / 10)),
+                    "in the night"
                 )
             );
         }

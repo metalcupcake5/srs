@@ -1,7 +1,7 @@
 import { HiddenHand } from "../effects/buffs/HiddenHand";
 import { QingqueDamageBoost } from "../effects/buffs/QingqueDamageBoost";
 import { Action, ActionType } from "../system/Action";
-import { Character } from "../system/Character";
+import { Character, Element } from "../system/Character";
 import { Game } from "../system/Game";
 import { LightCone } from "../system/LightCone";
 import { RelicSet } from "../system/RelicSet";
@@ -43,7 +43,9 @@ export class Qingque extends Character {
         stats.quantumDamageBoost += 0.144;
         stats.percentDefense += 0.125;
 
-        super("Qingque", stats);
+        stats.quantumDamageBoost += 0.388; // orb
+
+        super("Qingque", stats, Element.Quantum);
 
         this.lightCone = lightCone;
         this.relicSets = relicSets;
@@ -82,6 +84,7 @@ export class Qingque extends Character {
 
         // level 6
         let attack = new Attack(
+            this.element,
             buffedStats,
             (atk) => {
                 if (this.hiddenHand) {
@@ -124,6 +127,7 @@ export class Qingque extends Character {
 
         // level 6
         let attack = new Attack(
+            this.element,
             buffedStats,
             (atk) => {
                 return atk * 2 * 3; // 3 enemies
@@ -179,6 +183,14 @@ export class Qingque extends Character {
         }
 
         attack.addModifier(
+            new AttackModifier(
+                AttackModifierType.DamageBoost,
+                this.stats[`${this.element}DamageBoost`],
+                "stat damage boost"
+            )
+        );
+
+        attack.addModifier(
             new AttackModifier(AttackModifierType.DamageBoost, 0.1)
         ); // genius
         attack.addModifier(
@@ -186,15 +198,11 @@ export class Qingque extends Character {
         ); // genius
 
         attack.addModifier(
-            new AttackModifier(AttackModifierType.DamageBoost, 0.144)
-        ); // traces
-
-        attack.addModifier(
-            new AttackModifier(AttackModifierType.DamageBoost, 0.388)
-        ); // orb
-
-        attack.addModifier(
-            new AttackModifier(AttackModifierType.Resistance, 0.2)
+            new AttackModifier(
+                AttackModifierType.Resistance,
+                0.2,
+                "non-quantum resistance"
+            )
         ); // res
 
         return attack;

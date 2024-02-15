@@ -36,7 +36,8 @@ export class QingqueDamageBoost extends Effect {
             attack.addModifier(
                 new AttackModifier(
                     AttackModifierType.DamageBoost,
-                    0.38 * this.stacks // a4 10% bonus (28 + 10 = 38)
+                    0.38 * this.stacks, // a4 10% bonus (28 + 10 = 38)
+                    "qingque tile draw damage boost"
                 )
             );
         }

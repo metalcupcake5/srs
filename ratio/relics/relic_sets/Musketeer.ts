@@ -24,7 +24,11 @@ export class Musketeer extends RelicSet {
     modifyAttack(attack: Attack): Attack {
         if (this.pieces == 4 && attack.types.includes(AttackType.Basic)) {
             attack.addModifier(
-                new AttackModifier(AttackModifierType.DamageBoost, 0.1)
+                new AttackModifier(
+                    AttackModifierType.DamageBoost,
+                    0.1,
+                    "musketeer"
+                )
             );
         }
         return attack;

@@ -1,6 +1,6 @@
 import { MatrixOfPrescienceEffect } from "../effects/buffs/MatrixOfPrescienceEffect";
 import { Action, ActionType } from "../system/Action";
-import { Character } from "../system/Character";
+import { Character, Element } from "../system/Character";
 import { Game } from "../system/Game";
 import { LightCone } from "../system/LightCone";
 import { RelicSet } from "../system/RelicSet";
@@ -34,7 +34,7 @@ export class FuXuan extends Character {
         stats.percentHealth += 0.18;
         stats.effectRes += 0.1;
 
-        super("Fu Xuan", stats);
+        super("Fu Xuan", stats, Element.Quantum);
 
         this.lightCone = lightCone;
         this.relicSets = relicSets;

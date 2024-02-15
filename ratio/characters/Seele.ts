@@ -1,6 +1,6 @@
 import { MatrixOfPrescienceEffect } from "../effects/buffs/MatrixOfPrescienceEffect";
 import { Action, ActionType } from "../system/Action";
-import { Character } from "../system/Character";
+import { Character, Element } from "../system/Character";
 import { Game } from "../system/Game";
 import { LightCone } from "../system/LightCone";
 import { RelicSet } from "../system/RelicSet";
@@ -38,7 +38,7 @@ export class Seele extends Character {
         stats.percentAttack += 0.28;
         stats.percentDefense += 0.125;
 
-        super("Seele", stats);
+        super("Seele", stats, Element.Quantum);
 
         this.lightCone = lightCone;
         this.relicSets = relicSets;
@@ -62,6 +62,7 @@ export class Seele extends Character {
 
         // lvl 5
         let attack = new Attack(
+            this.element,
             buffedStats,
             (atk) => {
                 return atk * 1;
@@ -96,7 +97,7 @@ export class Seele extends Character {
 
         let damage = attack.calcDamage();
 
-        game.actions.push(new Action(game, this, ActionType.Basic, damage))
+        game.actions.push(new Action(game, this, ActionType.Basic, damage));
         this.totalDamage += damage;
         this.currentEnergy += 20;
     }
@@ -138,6 +139,14 @@ export class Seele extends Character {
                 attack = effect.modifyAttack(attack);
             }
         }
+
+        attack.addModifier(
+            new AttackModifier(
+                AttackModifierType.DamageBoost,
+                this.stats[`${this.element}DamageBoost`],
+                "stat damage boost"
+            )
+        );
 
         return attack;
     }

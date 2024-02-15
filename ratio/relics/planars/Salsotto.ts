@@ -25,7 +25,11 @@ export class Salsotto extends PlanarSet {
         ) {
             if (attack.stats.critRate >= 0.5) {
                 attack.addModifier(
-                    new AttackModifier(AttackModifierType.DamageBoost, 0.15)
+                    new AttackModifier(
+                        AttackModifierType.DamageBoost,
+                        0.15,
+                        "salsotto"
+                    )
                 );
             }
         }
