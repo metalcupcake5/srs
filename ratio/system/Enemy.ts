@@ -1,5 +1,6 @@
 // import { Ratio } from "../characters/Ratio";
 import { Action, ActionType } from "./Action";
+import { Element } from "./Character";
 import { Game } from "./Game";
 import { Player } from "./Player";
 import { Stats } from "./Stats";
@@ -7,13 +8,15 @@ import { Stats } from "./Stats";
 export class Enemy extends Player {
     debuffs: number = 0;
     wisemanFolly: number = 0;
+    elements: Element[];
 
-    constructor(name: string, speed: number) {
+    constructor(name: string, speed: number, elements: Element[] = []) {
         super(name, speed, new Stats({ speed: speed }));
+        this.elements = elements;
     }
 
     act(game: Game): void {
-        game.actions.push(new Action(game, this, ActionType.Damage, 0))
+        game.actions.push(new Action(game, this, ActionType.Damage, 0));
     }
 
     damage(game: Game, damage: number): void {
