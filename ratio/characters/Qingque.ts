@@ -1,5 +1,4 @@
 import { HiddenHand } from "../effects/buffs/HiddenHand";
-import { MatrixOfPrescienceEffect } from "../effects/buffs/MatrixOfPrescienceEffect";
 import { QingqueDamageBoost } from "../effects/buffs/QingqueDamageBoost";
 import { Action, ActionType } from "../system/Action";
 import { Character } from "../system/Character";
@@ -17,7 +16,8 @@ import { EffectAttribute } from "../system/effects/Effect";
 // assumption: qq always draws 3 tiles before enhanced basic
 
 export class Qingque extends Character {
-    totalDamage: number = 0;
+    ultDamage: number = 0;
+    basicDamage: number = 0;
     turns: number = 0;
     lightCone: LightCone;
     relicSets: RelicSet[];
@@ -64,6 +64,7 @@ export class Qingque extends Character {
         }
 
         if (skillCount >= 3) {
+            this.hiddenHand = true;
             this.addEffect(new HiddenHand(this));
         }
 
@@ -83,7 +84,10 @@ export class Qingque extends Character {
         let attack = new Attack(
             buffedStats,
             (atk) => {
-                return atk * (2.4 + 1 + 1); // 3 enemies
+                if (this.hiddenHand) {
+                    return atk * (2.4 + 1 + 1); // 3 enemies
+                }
+                return atk; // 1 enemy
             },
             [AttackType.Basic],
             target
@@ -93,11 +97,11 @@ export class Qingque extends Character {
 
         let damage = attack.calcDamage();
 
-        this.totalDamage += damage;
+        this.hiddenHand = false;
+
+        this.basicDamage += damage;
         this.currentEnergy += 20;
-        game.actions.push(
-            new Action(game, this, ActionType.Basic, damage)
-        );
+        game.actions.push(new Action(game, this, ActionType.Basic, damage));
     }
 
     skill(game: Game) {
@@ -114,7 +118,34 @@ export class Qingque extends Character {
     }
 
     ult(game?: Game) {
+        let buffedStats = this.preAttackStats(game);
+
+        let target = game.getRandomEnemy();
+
+        // level 6
+        let attack = new Attack(
+            buffedStats,
+            (atk) => {
+                return atk * 2 * 3; // 3 enemies
+            },
+            [AttackType.Ultimate],
+            target
+        );
+
+        attack = this.preAttackModifiers(game, attack);
+
+        let damage = attack.calcDamage();
+
+        this.ultDamage += damage;
+        game.actions.push(new Action(game, this, ActionType.Ultimate, damage));
         this.currentEnergy = 5;
+
+        let filteredEffects = this.effects.filter(
+            (e) => e instanceof HiddenHand
+        );
+        if (filteredEffects.length <= 0) {
+            this.addEffect(new HiddenHand(this));
+        }
     }
 
     preAttackStats(game: Game): Stats {
@@ -147,6 +178,25 @@ export class Qingque extends Character {
             }
         }
 
+        attack.addModifier(
+            new AttackModifier(AttackModifierType.DamageBoost, 0.1)
+        ); // genius
+        attack.addModifier(
+            new AttackModifier(AttackModifierType.DefenseDown, 0.1)
+        ); // genius
+
+        attack.addModifier(
+            new AttackModifier(AttackModifierType.DamageBoost, 0.144)
+        ); // traces
+
+        attack.addModifier(
+            new AttackModifier(AttackModifierType.DamageBoost, 0.388)
+        ); // orb
+
+        attack.addModifier(
+            new AttackModifier(AttackModifierType.Resistance, 0.2)
+        ); // res
+
         return attack;
     }
 
@@ -155,11 +205,21 @@ export class Qingque extends Character {
     }
 
     printTotalDamage() {
+        let total = this.basicDamage + this.ultDamage;
         console.log(
-            `total damage by seele: ${this.totalDamage} in ${
+            `total damage by qq: ${total} in ${
                 this.turns
-            } turns | dmg/turn: ${Math.floor(this.totalDamage / this.turns)}`
+            } turns | dmg/turn: ${Math.floor(total / this.turns)}`
         );
-        return this.totalDamage;
+        return total;
+    }
+
+    getTotalDamage() {
+        let total = this.basicDamage + this.ultDamage;
+        return {
+            total: total,
+            basic: this.basicDamage,
+            ult: this.ultDamage,
+        };
     }
 }

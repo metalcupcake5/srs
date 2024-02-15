@@ -16,20 +16,18 @@ export class Action {
     damage: number;
     skillPoints: number;
     energy: number;
+    attack: number;
 
-    constructor(game: Game, character: Player, action: ActionType, damage = 0, ) {
+    constructor(game: Game, character: Player, action: ActionType, damage = 0) {
         this.av = game.totalAV;
         this.name = character.name;
         this.action = action;
         this.damage = damage;
         this.skillPoints = game.skillPoints;
-        this.energy = (character instanceof Character) ? (character as Character).currentEnergy : 0;
+        this.energy =
+            character instanceof Character
+                ? (character as Character).currentEnergy
+                : 0;
+        this.attack = character.stats.totalAttack();
     }
 }
-
-/* ame.actions.push({
-            av: game.totalAV,
-            name: this.name,
-            action: "damage",
-            damage: 1,
-        });*/

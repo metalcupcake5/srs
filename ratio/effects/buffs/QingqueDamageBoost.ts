@@ -1,5 +1,8 @@
 import { Attack, AttackType } from "../../system/attacks/Attack";
-import { AttackModifier, AttackModifierType } from "../../system/attacks/AttackModifier";
+import {
+    AttackModifier,
+    AttackModifierType,
+} from "../../system/attacks/AttackModifier";
 import {
     Effect,
     EffectAttribute,
@@ -29,8 +32,13 @@ export class QingqueDamageBoost extends Effect {
     }
 
     modifyAttack(attack: Attack): Attack {
-        if(attack.types.includes(AttackType.Basic)) {
-            attack.addModifier(new AttackModifier(AttackModifierType.DamageBoost, 0.28 * this.stacks))
+        if (attack.types.includes(AttackType.Basic)) {
+            attack.addModifier(
+                new AttackModifier(
+                    AttackModifierType.DamageBoost,
+                    0.38 * this.stacks // a4 10% bonus (28 + 10 = 38)
+                )
+            );
         }
         return attack;
     }

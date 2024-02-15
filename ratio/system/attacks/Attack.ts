@@ -99,8 +99,41 @@ export class Attack {
             dmgReductionMultiplier *
             brokenMultiplier;
 
-        // console.log(`damage: ${this.stats.critDamage}`);
-
         return crit(finalDamage, this.stats.critRate, this.stats.critDamage);
+    }
+
+    modifierTotals() {
+        let base = this.multiplierFunction(this.stats.totalAttack());
+        let damageBoost =
+            1 + this.getModifierTotal(AttackModifierType.DamageBoost);
+        let weakenMod = 1 - this.getModifierTotal(AttackModifierType.Weaken);
+        let defMultiplier = defReductionFormula({
+            reduction: this.getModifierTotal(AttackModifierType.DefenseDown),
+            defenderLevel: 74,
+        });
+        let resMultiplier =
+            1 -
+            (this.getModifierTotal(AttackModifierType.Resistance) -
+                this.getModifierTotal(AttackModifierType.ResistanceReduction));
+        let vulnMultiplier =
+            1 + this.getModifierTotal(AttackModifierType.Vulnerability);
+        let dmgReductionMultiplier = this.modifiers
+            .filter((mod) => mod.type == AttackModifierType.DamageReduction)
+            .reduce(
+                (accumulator, current) => (accumulator *= 1 - current.value),
+                1
+            );
+        let brokenMultiplier = 0.9;
+
+        return {
+            base: base,
+            damage: damageBoost,
+            weaken: weakenMod,
+            defMultiplier: defMultiplier,
+            resistance: resMultiplier,
+            vulnerability: vulnMultiplier,
+            damageReduction: dmgReductionMultiplier,
+            broken: brokenMultiplier,
+        };
     }
 }
