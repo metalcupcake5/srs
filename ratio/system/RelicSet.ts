@@ -5,7 +5,7 @@ export abstract class RelicSet {
     name: string;
     pieces: number;
 
-    constructor(name: string, pieces: number) {
+    constructor(name: string, pieces: 2 | 4) {
         this.name = name;
         this.pieces = pieces;
     }
