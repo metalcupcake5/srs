@@ -97,7 +97,7 @@ export class Seele extends Character {
 
         let damage = attack.calcDamage();
 
-        game.actions.push(new Action(game, this, ActionType.Basic, damage));
+        game.actions.push(new Action(game, this, ActionType.Basic, attack));
         this.totalDamage += damage;
         this.currentEnergy += 20;
     }

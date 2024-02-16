@@ -86,12 +86,13 @@ export class Qingque extends Character {
         let attack = new Attack(
             this.element,
             buffedStats,
-            (atk) => {
-                if (this.hiddenHand) {
-                    return atk * (2.4 + 1 + 1); // 3 enemies
-                }
-                return atk; // 1 enemy
-            },
+            this.hiddenHand
+                ? (atk) => {
+                      return atk * (2.4 + 1 + 1); // 3 enemies
+                  }
+                : (atk) => {
+                      return atk;
+                  },
             [AttackType.Basic],
             target
         );
@@ -103,8 +104,9 @@ export class Qingque extends Character {
         this.hiddenHand = false;
 
         this.basicDamage += damage;
+        console.log(`damage was ${damage}`);
         this.currentEnergy += 20;
-        game.actions.push(new Action(game, this, ActionType.Basic, damage));
+        game.actions.push(new Action(game, this, ActionType.Basic, attack));
     }
 
     skill(game: Game) {
@@ -141,7 +143,7 @@ export class Qingque extends Character {
         let damage = attack.calcDamage();
 
         this.ultDamage += damage;
-        game.actions.push(new Action(game, this, ActionType.Ultimate, damage));
+        game.actions.push(new Action(game, this, ActionType.Ultimate, attack));
         this.currentEnergy = 5;
 
         let filteredEffects = this.effects.filter(

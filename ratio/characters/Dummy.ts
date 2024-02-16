@@ -28,7 +28,7 @@ export class Dummy extends Character {
         const target = game.getRandomEnemy();
         target.damage(game, 1);
         game.addSkillPoint();
-        game.actions.push(new Action(game, this, ActionType.Damage, 1));
+        game.actions.push(new Action(game, this, ActionType.Damage));
     }
 
     damage(game: Game, damage: number): void {

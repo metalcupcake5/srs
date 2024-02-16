@@ -81,8 +81,11 @@ export class Stats {
         this.percentAttack += 0.432; // rope
         // planar has damage boost
 
-        if (Object.values(subs).reduce((s, e) => s + e, 0) > 24) {
-            throw new Error("sub count cannot exceed 24");
+        let subcount = Object.values(subs).reduce((s, e) => s + e, 0);
+        if (subcount > 24) {
+            throw new Error(
+                `sub count cannot exceed 24 (currently at ${subcount})`
+            );
         }
 
         if (!Object.values(subs).every((e) => e <= 12)) {

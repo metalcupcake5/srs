@@ -16,7 +16,7 @@ export class Enemy extends Player {
     }
 
     act(game: Game): void {
-        game.actions.push(new Action(game, this, ActionType.Damage, 0));
+        game.actions.push(new Action(game, this, ActionType.Damage));
     }
 
     damage(game: Game, damage: number): void {

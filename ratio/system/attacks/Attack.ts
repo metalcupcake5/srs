@@ -25,10 +25,10 @@ function crit(damage: number, critRate: number, critDamage: number) {
 }
 
 export enum AttackType {
-    Basic,
-    Skill,
-    Ultimate,
-    FollowUp,
+    Basic = "basic",
+    Skill = "skill",
+    Ultimate = "ultimate",
+    FollowUp = "followup",
 }
 
 type DamageFunction = (attack: number) => number;
@@ -138,6 +138,7 @@ export class Attack {
             vulnerability: vulnMultiplier,
             damageReduction: dmgReductionMultiplier,
             broken: brokenMultiplier,
+            crit: this.stats.critRate * this.stats.critDamage + 1,
         };
     }
 }
