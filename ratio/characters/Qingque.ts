@@ -191,13 +191,6 @@ export class Qingque extends Character {
         );
 
         attack.addModifier(
-            new AttackModifier(AttackModifierType.DamageBoost, 0.1)
-        ); // genius
-        attack.addModifier(
-            new AttackModifier(AttackModifierType.DefenseDown, 0.1)
-        ); // genius
-
-        attack.addModifier(
             new AttackModifier(
                 AttackModifierType.Resistance,
                 0.2,
