@@ -33,7 +33,7 @@ export class Genius extends RelicSet {
                 new AttackModifier(
                     AttackModifierType.DefenseDown,
                     quaWeak ? 0.2 : 0.1,
-                    "genius 4pc" + quaWeak ? " (qua weak)" : ""
+                    "genius 4pc" + (quaWeak ? " (qua weak)" : "")
                 )
             );
         }
