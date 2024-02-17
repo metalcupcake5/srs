@@ -26,4 +26,8 @@ export abstract class Character extends Player {
     abstract damage(game: Game, damage: number): void;
 
     abstract printTotalDamage(): number;
+
+    regenerateEnergy(amount: number) {
+        this.currentEnergy += amount * (1 + this.stats.energyRegenerationRate);
+    }
 }

@@ -104,8 +104,7 @@ export class Qingque extends Character {
         this.hiddenHand = false;
 
         this.basicDamage += damage;
-        console.log(`damage was ${damage}`);
-        this.currentEnergy += 20;
+        this.regenerateEnergy(20);
         game.actions.push(new Action(game, this, ActionType.Basic, attack));
     }
 
@@ -144,7 +143,8 @@ export class Qingque extends Character {
 
         this.ultDamage += damage;
         game.actions.push(new Action(game, this, ActionType.Ultimate, attack));
-        this.currentEnergy = 5;
+        this.currentEnergy = 0;
+        this.regenerateEnergy(5);
 
         let filteredEffects = this.effects.filter(
             (e) => e instanceof HiddenHand

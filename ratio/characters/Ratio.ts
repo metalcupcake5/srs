@@ -83,7 +83,7 @@ export class Ratio extends Character {
         let damage = attack.calcDamage();
 
         this.totalDamage += damage;
-        this.currentEnergy += 20;
+        this.regenerateEnergy(20);
         this.followUp(game);
     }
 
@@ -107,7 +107,8 @@ export class Ratio extends Character {
         let damage = attack.calcDamage();
 
         this.totalDamage += damage;
-        this.currentEnergy = 5;
+        this.currentEnergy = 0;
+        this.regenerateEnergy(5);
     }
 
     followUp(game: Game) {
@@ -130,7 +131,7 @@ export class Ratio extends Character {
         let damage = attack.calcDamage();
 
         this.totalDamage += damage;
-        this.currentEnergy += 5;
+        this.regenerateEnergy(5);
     }
 
     preAttackStats(game: Game): Stats {

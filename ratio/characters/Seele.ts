@@ -99,15 +99,16 @@ export class Seele extends Character {
 
         game.actions.push(new Action(game, this, ActionType.Basic, attack));
         this.totalDamage += damage;
-        this.currentEnergy += 20;
+        this.regenerateEnergy(20);
     }
 
     skill(game: Game) {
-        this.currentEnergy += 30;
+        this.regenerateEnergy(30);
     }
 
     ult(game?: Game) {
-        this.currentEnergy = 5;
+        this.currentEnergy = 0;
+        this.regenerateEnergy(5);
     }
 
     preAttackStats(game: Game): Stats {

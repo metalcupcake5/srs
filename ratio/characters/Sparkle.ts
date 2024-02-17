@@ -70,15 +70,18 @@ export class Sparkle extends Character {
     }
 
     basic(game: Game) {
-        this.currentEnergy += 20;
+        game.addSkillPoint();
+        this.regenerateEnergy(30); // a6 10 more energy on basic (20 + 10)
     }
 
     skill(game: Game) {
         game.useSkillPoint();
+        this.regenerateEnergy(30);
     }
 
     ult(game?: Game) {
-        this.currentEnergy = 5;
+        this.currentEnergy = 0;
+        this.regenerateEnergy(5);
     }
 
     talent(game?: Game) {

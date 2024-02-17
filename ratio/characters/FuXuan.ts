@@ -70,13 +70,13 @@ export class FuXuan extends Character {
                 char.addEffect(this.matrixEffect);
             }
         }
-        this.currentEnergy += 50;
+        this.regenerateEnergy(50);
         game.useSkillPoint();
         game.actions.push(new Action(game, this, ActionType.Skill));
     }
 
     ult(game?: Game) {
-        this.currentEnergy = 5;
+        this.regenerateEnergy(5);
     }
 
     damage(game: Game, damage: number): void {
