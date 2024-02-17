@@ -1,3 +1,4 @@
+import { SparkleCritDamageBoost } from "../effects/buffs/SparkleCritDamageBoost";
 import { Action, ActionType } from "../system/Action";
 import { Character, Element } from "../system/Character";
 import { Game } from "../system/Game";
@@ -49,6 +50,7 @@ export class Sparkle extends Character {
         lightCone.linkCharacter(this);
 
         game.maxSkillPoints += 2;
+        game.skillPoints += 3; // technique
 
         // eventEmitter.on("skillPointUse", (game: Game) => {
         //     this.talent(game);
@@ -79,9 +81,14 @@ export class Sparkle extends Character {
         let targetChar = game.characters.sort(
             (a, b) => b.stats.totalAttack() - a.stats.totalAttack()
         )[0];
-        console.log(`previous av: ${targetChar.actionValue}`);
         targetChar.advanceForward(0.5);
-        console.log(`current av: ${targetChar.actionValue}`);
+        targetChar.addEffect(
+            new SparkleCritDamageBoost(
+                targetChar,
+                this.stats.critDamage * 0.24 + 0.45
+            )
+        );
+
         game.useSkillPoint();
         this.regenerateEnergy(30);
         game.actions.push(new Action(game, this, ActionType.Skill));

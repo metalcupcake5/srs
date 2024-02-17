@@ -45,21 +45,21 @@ export class Game {
     }
 
     act() {
-        // console.log("running next action");
-        const actor: Player = this.queue.shift();
-        this.totalAV += actor.actionValue;
-        actor.tickDownEffects(this, TickDownTime.TurnStart);
-        actor.act(this);
-        actor.tickDownEffects(this, TickDownTime.TurnEnd);
-        for (const c of this.queue) {
-            c.actionValue -= actor.actionValue;
-        }
-        if (this.totalAV > this.maxAV) return;
-        actor.resetActionValue();
-        this.queue.push(actor);
         this.queue = [...this.players].sort(
             (a, b) => a.actionValue - b.actionValue
         );
+        // console.log("running next action");
+        const actor: Player = this.queue.shift();
+        this.totalAV += actor.actionValue;
+        for (const c of this.queue) {
+            c.actionValue -= actor.actionValue;
+        }
+        actor.tickDownEffects(this, TickDownTime.TurnStart);
+        actor.act(this);
+        actor.tickDownEffects(this, TickDownTime.TurnEnd);
+        if (this.totalAV > this.maxAV) return;
+        actor.resetActionValue();
+        this.queue.push(actor);
     }
 
     getRandomEnemy() {
