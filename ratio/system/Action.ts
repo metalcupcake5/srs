@@ -1,6 +1,7 @@
 import { Character } from "./Character";
 import { Game } from "./Game";
 import { Player } from "./Player";
+import { Stats } from "./Stats";
 import { Attack } from "./attacks/Attack";
 
 export enum ActionType {
@@ -18,6 +19,8 @@ export class Action {
     skillPoints: number;
     energy: number;
     attack: Attack | null;
+    stats: Stats;
+    effects: any[];
 
     constructor(
         game: Game,
@@ -35,5 +38,15 @@ export class Action {
                 ? (character as Character).currentEnergy
                 : 0;
         this.attack = attack || null;
+        this.stats = character.stats.clone();
+        this.effects = [];
+        for (const e of character.effects) {
+            this.effects.push({
+                name: e.name,
+                duration: e.duration,
+                stacks: e.stacks,
+                tickDownTime: e.tickDownTime,
+            });
+        }
     }
 }

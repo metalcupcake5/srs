@@ -8,19 +8,19 @@ export class Dummy extends Character {
     turns: number = 0;
     // lightCone;
 
-    constructor() {
+    constructor(name: string) {
         const stats = new Stats(
             {
                 health: 0,
                 defense: 0,
                 attack: 0,
-                speed: 100,
+                speed: 125,
                 maxEnergy: 0,
             },
             {}
         );
 
-        super("dummy test char", stats, Element.Physical);
+        super(name, stats, Element.Physical);
     }
 
     act(game: Game): void {
