@@ -39,8 +39,4 @@ export class Nocturne extends Effect {
     modifyAttack(attack: Attack): Attack {
         return attack;
     }
-
-    resetDuration() {
-        this.duration = 3;
-    }
 }
