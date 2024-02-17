@@ -18,20 +18,13 @@ export class Game {
     actions: Action[] = [];
     eventEmitter = new EventEmitter();
 
-    constructor(chars: Player[]) {
-        this.players = chars;
+    constructor(enemies: Enemy[]) {
+        this.players = [...enemies];
         this.queue = [...this.players].sort(
             (a, b) => a.actionValue - b.actionValue
         );
 
-        for (const p of this.players) {
-            if (p instanceof Character) {
-                this.characters.push(p);
-            }
-            if (p instanceof Enemy) {
-                this.enemies.push(p);
-            }
-        }
+        this.enemies = enemies;
     }
 
     run() {
@@ -96,5 +89,13 @@ export class Game {
             this.eventEmitter.emit("skillPointUse", this);
             this.skillPoints--;
         }
+    }
+
+    addCharacter(character: Character) {
+        this.players.push(character);
+        this.characters.push(character);
+        this.queue = [...this.players].sort(
+            (a, b) => a.actionValue - b.actionValue
+        );
     }
 }

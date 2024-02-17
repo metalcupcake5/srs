@@ -29,7 +29,6 @@ export class Action {
         this.name = character.name;
         this.action = action;
         this.damage = attack?.calcDamage() || 0;
-        console.log(`action calculated damage as ${this.damage}`);
         this.skillPoints = game.skillPoints;
         this.energy =
             character instanceof Character

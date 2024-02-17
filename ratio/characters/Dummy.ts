@@ -11,11 +11,11 @@ export class Dummy extends Character {
     constructor() {
         const stats = new Stats(
             {
-                health: 1048,
-                defense: 461,
-                attack: 776,
+                health: 0,
+                defense: 0,
+                attack: 0,
                 speed: 100,
-                maxEnergy: 140,
+                maxEnergy: 0,
             },
             {}
         );

@@ -50,4 +50,10 @@ export abstract class Player {
             }
         }
     }
+
+    advanceForward(amount: number) {
+        let currentAG = this.actionValue * this.stats.speed;
+        this.actionValue =
+            Math.max(0, currentAG - 10_000 * amount) / this.speed;
+    }
 }

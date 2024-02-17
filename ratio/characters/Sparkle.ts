@@ -1,3 +1,4 @@
+import { Action, ActionType } from "../system/Action";
 import { Character, Element } from "../system/Character";
 import { Game } from "../system/Game";
 import { LightCone } from "../system/LightCone";
@@ -35,9 +36,11 @@ export class Sparkle extends Character {
             substats
         );
         // sub traces
-        stats.percentAttack += 0.28;
-        stats.quantumDamageBoost += 0.144;
-        stats.percentDefense += 0.125;
+        stats.percentHealth += 0.28;
+        stats.critDamage += 0.24;
+        stats.effectRes += 0.1;
+
+        stats.energyRegenerationRate += 0.19439401499999998; // er rope
 
         super("Sparkle", stats, Element.Quantum);
 
@@ -55,33 +58,43 @@ export class Sparkle extends Character {
     act(game: Game): void {
         this.turns++;
 
-        for (let i = 0; i < 3; i++) {
-            if (game.skillPoints <= 0) {
-                break;
-            }
-            this.skill(game);
-        }
-
         if (this.currentEnergy >= this.stats.maxEnergy) {
             this.ult(game);
         }
 
-        this.basic(game);
+        if (game.skillPoints < 1) {
+            return this.basic(game);
+        }
+
+        this.skill(game);
     }
 
     basic(game: Game) {
         game.addSkillPoint();
         this.regenerateEnergy(30); // a6 10 more energy on basic (20 + 10)
+        game.actions.push(new Action(game, this, ActionType.Basic));
     }
 
     skill(game: Game) {
+        let targetChar = game.characters.sort(
+            (a, b) => b.stats.totalAttack() - a.stats.totalAttack()
+        )[0];
+        console.log(`previous av: ${targetChar.actionValue}`);
+        targetChar.advanceForward(0.5);
+        console.log(`current av: ${targetChar.actionValue}`);
         game.useSkillPoint();
         this.regenerateEnergy(30);
+        game.actions.push(new Action(game, this, ActionType.Skill));
     }
 
-    ult(game?: Game) {
+    ult(game: Game) {
         this.currentEnergy = 0;
+        game.addSkillPoint();
+        game.addSkillPoint();
+        game.addSkillPoint();
+        game.addSkillPoint();
         this.regenerateEnergy(5);
+        game.actions.push(new Action(game, this, ActionType.Ultimate));
     }
 
     talent(game?: Game) {
@@ -136,7 +149,7 @@ export class Sparkle extends Character {
 
     printTotalDamage() {
         console.log(
-            `total damage by seele: ${this.totalDamage} in ${
+            `total damage by sparkle: ${this.totalDamage} in ${
                 this.turns
             } turns | dmg/turn: ${Math.floor(this.totalDamage / this.turns)}`
         );

@@ -97,6 +97,10 @@ export class Qingque extends Character {
             target
         );
 
+        if (!this.hiddenHand) {
+            game.addSkillPoint();
+        }
+
         attack = this.preAttackModifiers(game, attack);
 
         let damage = attack.calcDamage();
