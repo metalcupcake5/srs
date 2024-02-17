@@ -20,6 +20,7 @@ export enum Target {
 export enum TickDownTime {
     TurnStart,
     TurnEnd,
+    Never,
 }
 
 export abstract class Effect {
@@ -50,10 +51,19 @@ export abstract class Effect {
             this.targetting,
             this.owner,
             this.tickDownTime,
-            this.stacks
-        ] = [name, duration, type, attributes, targetting, owner, tickDownTime, stacks];
+            this.stacks,
+        ] = [
+            name,
+            duration,
+            type,
+            attributes,
+            targetting,
+            owner,
+            tickDownTime,
+            stacks,
+        ];
     }
 
     abstract modifyStats(stats: Stats): Stats;
-    abstract modifyAttack(attack: Attack): Attack
+    abstract modifyAttack(attack: Attack): Attack;
 }
