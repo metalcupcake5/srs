@@ -28,6 +28,10 @@ export abstract class Character extends Player {
     abstract printTotalDamage(): number;
 
     regenerateEnergy(amount: number) {
-        this.currentEnergy += amount * (1 + this.stats.energyRegenerationRate);
+        this.currentEnergy = Math.min(
+            this.stats.maxEnergy,
+            this.currentEnergy +
+                amount * (1 + this.stats.energyRegenerationRate)
+        );
     }
 }
