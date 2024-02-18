@@ -79,14 +79,14 @@ export class Game {
 
     addSkillPoint(triggeringCharacter: Character) {
         if (this.skillPoints < this.maxSkillPoints) {
-            this.eventEmitter.emit("skillPointGain", this);
+            this.eventEmitter.emit("skillPointGain", this, triggeringCharacter);
             this.skillPoints++;
         }
     }
 
     useSkillPoint(triggeringCharacter: Character) {
         if (this.skillPoints > 0) {
-            this.eventEmitter.emit("skillPointUse", this);
+            this.eventEmitter.emit("skillPointUse", this, triggeringCharacter);
             this.skillPoints--;
         }
     }
