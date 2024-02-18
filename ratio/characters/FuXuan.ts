@@ -59,7 +59,7 @@ export class FuXuan extends Character {
     }
 
     basic(game: Game) {
-        game.addSkillPoint();
+        game.addSkillPoint(this);
         game.actions.push(new Action(game, this, ActionType.Basic));
     }
 
@@ -71,7 +71,7 @@ export class FuXuan extends Character {
             }
         }
         this.regenerateEnergy(50);
-        game.useSkillPoint();
+        game.useSkillPoint(this);
         game.actions.push(new Action(game, this, ActionType.Skill));
     }
 

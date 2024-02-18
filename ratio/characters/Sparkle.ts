@@ -72,7 +72,7 @@ export class Sparkle extends Character {
     }
 
     basic(game: Game) {
-        game.addSkillPoint();
+        game.addSkillPoint(this);
         this.regenerateEnergy(30); // a6 10 more energy on basic (20 + 10)
         game.actions.push(new Action(game, this, ActionType.Basic));
     }
@@ -89,17 +89,17 @@ export class Sparkle extends Character {
             )
         );
 
-        game.useSkillPoint();
+        game.useSkillPoint(this);
         this.regenerateEnergy(30);
         game.actions.push(new Action(game, this, ActionType.Skill));
     }
 
     ult(game: Game) {
         this.currentEnergy = 0;
-        game.addSkillPoint();
-        game.addSkillPoint();
-        game.addSkillPoint();
-        game.addSkillPoint();
+        game.addSkillPoint(this);
+        game.addSkillPoint(this);
+        game.addSkillPoint(this);
+        game.addSkillPoint(this);
         this.regenerateEnergy(5);
         game.actions.push(new Action(game, this, ActionType.Ultimate));
     }

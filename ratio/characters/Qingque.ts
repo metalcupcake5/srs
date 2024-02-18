@@ -102,7 +102,7 @@ export class Qingque extends Character {
         );
 
         if (!this.hiddenHand) {
-            game.addSkillPoint();
+            game.addSkillPoint(this);
         }
 
         attack = this.preAttackModifiers(game, attack);
@@ -117,7 +117,7 @@ export class Qingque extends Character {
     }
 
     skill(game: Game) {
-        game.useSkillPoint();
+        game.useSkillPoint(this);
         game.actions.push(new Action(game, this, ActionType.Skill));
         let filteredEffects = this.effects.filter(
             (e) => e instanceof QingqueDamageBoost
