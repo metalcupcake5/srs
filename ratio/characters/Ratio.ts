@@ -81,6 +81,8 @@ export class Ratio extends Character {
 
         attack = this.preAttackModifiers(game, attack);
 
+        target.modifyAttack(game, attack);
+
         let damage = attack.calcDamage();
 
         this.totalDamage += damage;
@@ -105,6 +107,8 @@ export class Ratio extends Character {
 
         attack = this.preAttackModifiers(game, attack);
 
+        enemy.modifyAttack(game, attack);
+
         let damage = attack.calcDamage();
 
         this.totalDamage += damage;
@@ -128,6 +132,8 @@ export class Ratio extends Character {
         );
 
         attack = this.preAttackModifiers(game, attack);
+
+        target.modifyAttack(game, attack);
 
         let damage = attack.calcDamage();
 

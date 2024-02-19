@@ -84,17 +84,7 @@ export class Seele extends Character {
 
         attack = this.preAttackModifiers(game, attack);
 
-        attack.addModifier(
-            new AttackModifier(AttackModifierType.DamageBoost, 0.488) // qua orb
-        );
-
-        attack.addModifier(
-            new AttackModifier(AttackModifierType.DamageReduction, 0.1) // non break
-        );
-
-        attack.addModifier(
-            new AttackModifier(AttackModifierType.Resistance, 0.2) // qua weak
-        );
+        target.modifyAttack(game, attack);
 
         let damage = attack.calcDamage();
 

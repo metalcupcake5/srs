@@ -104,6 +104,8 @@ export class Qingque extends Character {
 
         attack = this.preAttackModifiers(game, attack);
 
+        target.modifyAttack(game, attack);
+
         let damage = attack.calcDamage();
 
         this.hiddenHand = false;
@@ -143,6 +145,8 @@ export class Qingque extends Character {
         );
 
         attack = this.preAttackModifiers(game, attack);
+
+        target.modifyAttack(game, attack);
 
         let damage = attack.calcDamage();
 

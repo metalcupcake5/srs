@@ -4,6 +4,9 @@ import { Element } from "./Character";
 import { Game } from "./Game";
 import { Player } from "./Player";
 import { Stats } from "./Stats";
+import { Attack } from "./attacks/Attack";
+import { AttackModifierType } from "./attacks/AttackModifier";
+import { EffectAttribute } from "./effects/Effect";
 
 export class Enemy extends Player {
     debuffs: number = 0;
@@ -24,5 +27,13 @@ export class Enemy extends Player {
         //     (game.characters[0] as Ratio).followUp(game);
         //     this.wisemanFolly--;
         // }
+    }
+
+    modifyAttack(game: Game, attack: Attack) {
+        for (const e of this.effects) {
+            if (e.attributes.includes(EffectAttribute.AttackModifier)) {
+                e.modifyAttack(attack);
+            }
+        }
     }
 }

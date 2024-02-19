@@ -1,4 +1,5 @@
 import { Element } from "../Character";
+import { Enemy } from "../Enemy";
 import { Player } from "../Player";
 import { Stats } from "../Stats";
 import { AttackModifier, AttackModifierType } from "./AttackModifier";
