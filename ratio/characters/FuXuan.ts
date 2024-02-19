@@ -17,7 +17,8 @@ export class FuXuan extends Character {
     constructor(
         lightCone: LightCone,
         substats: Rolls,
-        relicSets: RelicSet[] = []
+        relicSets: RelicSet[] = [],
+        game: Game
     ) {
         const stats = new Stats(
             {
@@ -44,6 +45,11 @@ export class FuXuan extends Character {
         lightCone.linkCharacter(this);
 
         this.matrixEffect.resetDuration(); // technique
+        for (let char of game.characters) {
+            if (!char.effects.includes(this.matrixEffect)) {
+                char.addEffect(this.matrixEffect);
+            }
+        }
     }
 
     act(game: Game): void {
