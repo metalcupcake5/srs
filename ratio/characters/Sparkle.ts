@@ -1,4 +1,5 @@
 import { SparkleCritDamageBoost } from "../effects/buffs/SparkleCritDamageBoost";
+import { SparkleDamageBoost } from "../effects/buffs/SparkleDamageBoost";
 import { Action, ActionType } from "../system/Action";
 import { Character, Element } from "../system/Character";
 import { Game } from "../system/Game";
@@ -11,6 +12,7 @@ import {
     AttackModifierType,
 } from "../system/attacks/AttackModifier";
 import { EffectAttribute } from "../system/effects/Effect";
+import { Cipher } from "../effects/buffs/Cipher";
 
 // TODO subscribe to skill point event
 
@@ -53,9 +55,9 @@ export class Sparkle extends Character {
         game.maxSkillPoints += 2;
         game.skillPoints += 3; // technique
 
-        // eventEmitter.on("skillPointUse", (game: Game) => {
-        //     this.talent(game);
-        // });
+        game.eventEmitter.on("skillPointUse", (game: Game) => {
+            this.talent(game);
+        });
     }
 
     act(game: Game): void {
@@ -102,12 +104,33 @@ export class Sparkle extends Character {
         game.addSkillPoint(this);
         game.addSkillPoint(this);
         this.regenerateEnergy(5);
+
         game.actions.push(new Action(game, this, ActionType.Ultimate));
+
+        for (let char of game.characters) {
+            let cipher = char.effects.find((e) => e instanceof Cipher);
+            if (cipher) {
+                (cipher as Cipher).resetDuration();
+                continue;
+            }
+            char.addEffect(new Cipher(char));
+        }
     }
 
     talent(game?: Game) {
         // Whenever an ally consumes 1 Skill Point, all allies' DMG increases by 6%.
         // This effect lasts for 2 turn(s) and can stack up to 3 time(s).
+        for (let char of game.characters) {
+            let damageBoostEffect = char.effects.find(
+                (e) => e instanceof SparkleDamageBoost
+            );
+            if (damageBoostEffect) {
+                (damageBoostEffect as SparkleDamageBoost).resetDuration();
+                (damageBoostEffect as SparkleDamageBoost).addStack();
+                continue;
+            }
+            char.addEffect(new SparkleDamageBoost(char));
+        }
     }
 
     preAttackStats(game: Game): Stats {

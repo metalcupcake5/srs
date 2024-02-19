@@ -12,11 +12,12 @@ import {
 } from "../../system/effects/Effect";
 import { Player } from "../../system/Player";
 import { Stats } from "../../system/Stats";
+import { SparkleDamageBoost } from "./SparkleDamageBoost";
 
-export class SparkleDamageBoost extends Effect {
+export class Cipher extends Effect {
     constructor(player: Player) {
         super(
-            "Damage Boost (Sparkle)",
+            "Cipher (Sparkle)",
             2,
             EffectType.Buff,
             [EffectAttribute.AttackModifier],
@@ -32,18 +33,19 @@ export class SparkleDamageBoost extends Effect {
     }
 
     modifyAttack(attack: Attack): Attack {
-        attack.addModifier(
-            new AttackModifier(
-                AttackModifierType.DamageBoost,
-                0.06 * this.stacks,
-                `sparkle skill point usage damage boost (${this.stacks} stacks)`
-            )
+        let damageBoost = this.owner.effects.find(
+            (e) => e instanceof SparkleDamageBoost
         );
+        if (damageBoost) {
+            attack.addModifier(
+                new AttackModifier(
+                    AttackModifierType.DamageBoost,
+                    0.1 * damageBoost.stacks,
+                    `sparkle ultimate damage boost buff (${damageBoost.stacks} times)`
+                )
+            );
+        }
         return attack;
-    }
-
-    addStack() {
-        this.stacks = Math.min(3, this.stacks + 1);
     }
 
     resetDuration() {
