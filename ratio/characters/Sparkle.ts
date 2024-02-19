@@ -34,6 +34,7 @@ export class Sparkle extends Character {
                 speed: 101,
                 maxEnergy: 110,
             },
+            true,
             substats
         );
         // sub traces
@@ -41,7 +42,7 @@ export class Sparkle extends Character {
         stats.critDamage += 0.24;
         stats.effectRes += 0.1;
 
-        stats.energyRegenerationRate += 0.19439401499999998; // er rope
+        stats.addSupportCharacterMainstats();
 
         super("Sparkle", stats, Element.Quantum);
 

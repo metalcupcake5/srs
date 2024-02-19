@@ -27,12 +27,15 @@ export class FuXuan extends Character {
                 speed: 100,
                 maxEnergy: 135,
             },
+            true,
             substats
         );
         // sub traces
         stats.critRate += 0.187;
         stats.percentHealth += 0.18;
         stats.effectRes += 0.1;
+
+        stats.addSupportCharacterMainstats();
 
         super("Fu Xuan", stats, Element.Quantum);
 

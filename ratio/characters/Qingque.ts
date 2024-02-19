@@ -36,6 +36,7 @@ export class Qingque extends Character {
                 speed: 98,
                 maxEnergy: 140,
             },
+            true,
             substats
         );
         // sub traces
@@ -43,11 +44,7 @@ export class Qingque extends Character {
         stats.quantumDamageBoost += 0.144;
         stats.percentDefense += 0.125;
 
-        stats.quantumDamageBoost += 0.388; // orb
-
-        //use atk boots instead
-        stats.speed -= 25.032;
-        stats.percentAttack += 0.432;
+        stats.addDpsCharacterMainstats(Element.Quantum, true, false);
 
         super("Qingque", stats, Element.Quantum);
 

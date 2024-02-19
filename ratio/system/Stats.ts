@@ -1,3 +1,5 @@
+import { Element } from "./Character";
+
 export interface Rolls {
     flatHealth?: number;
     flatAttack?: number;
@@ -62,6 +64,7 @@ export class Stats {
             speed = 100,
             maxEnergy = 100,
         },
+        isCharacter: boolean,
         subs: Rolls = {}
     ) {
         this.baseHealth = health;
@@ -70,44 +73,22 @@ export class Stats {
         this.speed = speed;
         this.maxEnergy = maxEnergy;
 
-        // TODO replace with check for type of character
+        if (isCharacter) {
+            let subcount = Object.values(subs).reduce((s, e) => s + e, 0);
+            if (subcount > 24) {
+                throw new Error(
+                    `sub count cannot exceed 24 (currently at ${subcount})`
+                );
+            }
 
-        //standard dps mainstats
-        this.flatAttack += 352.8; // hands
-        this.flatHealth += 705.6; // head
-        //this.critDamage += 0.648; // body
-        this.critRate += 0.324; // body
-        this.speed += 25.032; // boots
-        this.percentAttack += 0.432; // rope
-        // planar has damage boost
+            if (!Object.values(subs).every((e) => e <= 12)) {
+                throw new Error("subs are capped at 12");
+            }
 
-        let subcount = Object.values(subs).reduce((s, e) => s + e, 0);
-        if (subcount > 24) {
-            throw new Error(
-                `sub count cannot exceed 24 (currently at ${subcount})`
-            );
+            for (const [name, value] of Object.entries(subValues)) {
+                this[name] += value * (2 + (subs[name] ?? 0));
+            }
         }
-
-        if (!Object.values(subs).every((e) => e <= 12)) {
-            throw new Error("subs are capped at 12");
-        }
-
-        for (const [name, value] of Object.entries(subValues)) {
-            this[name] += value * (2 + (subs[name] ?? 0));
-            // if (subs[name]) {
-            //     console.log(
-            //         `added ${
-            //             2 + (subs[name] ?? 0)
-            //         } ${name} subs for a total of ${this[name]}`
-            //     );
-            // }
-        }
-
-        // for (const [name, value] of Object.entries(subs)) {
-        //     if (name.includes("flat")) continue;
-        //     this[name] += value * subValues[name];
-        //     console.log(`added ${value * subValues[name]} to ${name}`);
-        // }
     }
 
     totalAttack(): number {
@@ -127,7 +108,7 @@ export class Stats {
     }
 
     clone(): Stats {
-        let newStats = new Stats({});
+        let newStats = new Stats({}, true);
         newStats.baseHealth = this.baseHealth;
         newStats.baseDefense = this.baseDefense;
         newStats.baseAttack = this.baseAttack;
@@ -153,5 +134,42 @@ export class Stats {
         newStats.quantumDamageBoost = this.quantumDamageBoost;
         newStats.imaginaryDamageBoost = this.imaginaryDamageBoost;
         return newStats;
+    }
+
+    addDpsCharacterMainstats(
+        element: Element,
+        critRateBody = true,
+        speedBoots = true
+    ) {
+        // flat mainstats
+        this.flatAttack += 352.8; // hands
+        this.flatHealth += 705.6; // head
+
+        if (critRateBody) {
+            this.critRate += 0.324;
+        } else {
+            this.critDamage += 0.648;
+        }
+
+        if (speedBoots) {
+            this.speed += 25.032;
+        } else {
+            this.percentAttack += 0.432;
+        }
+
+        this.percentAttack += 0.432; // rope
+        this[`${element}DamageBoost`] += 0.388; // orb
+    }
+
+    addSupportCharacterMainstats(errRope = true) {
+        // flat mainstats
+        this.flatAttack += 352.8; // hands
+        this.flatHealth += 705.6; // head
+
+        this.speed += 25.032; // boots
+
+        if (errRope) {
+            this.energyRegenerationRate += 0.19439401499999998; // er rope
+        }
     }
 }

@@ -11,7 +11,7 @@ export class Enemy extends Player {
     elements: Element[];
 
     constructor(name: string, speed: number, elements: Element[] = []) {
-        super(name, speed, new Stats({ speed: speed }));
+        super(name, speed, new Stats({ speed: speed }, false));
         this.elements = elements;
     }
 

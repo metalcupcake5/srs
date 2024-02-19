@@ -31,6 +31,7 @@ export class Seele extends Character {
                 speed: 115,
                 maxEnergy: 120,
             },
+            true,
             substats
         );
         // sub traces

@@ -17,6 +17,7 @@ export class Dummy extends Character {
                 speed: 125,
                 maxEnergy: 0,
             },
+            true,
             {}
         );
 

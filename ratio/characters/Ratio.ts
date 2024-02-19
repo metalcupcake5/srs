@@ -32,6 +32,7 @@ export class Ratio extends Character {
                 speed: 103,
                 maxEnergy: 140,
             },
+            true,
             substats
         );
         // sub traces
