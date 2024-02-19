@@ -13,6 +13,7 @@ import {
 } from "../system/attacks/AttackModifier";
 import { EffectAttribute } from "../system/effects/Effect";
 import { Cipher } from "../effects/buffs/Cipher";
+import { Nocturne } from "../effects/buffs/Nocturne";
 
 // TODO subscribe to skill point event
 
@@ -51,13 +52,25 @@ export class Sparkle extends Character {
         this.lightCone = lightCone;
         this.relicSets = relicSets;
         lightCone.linkCharacter(this);
+    }
 
+    setup(game: Game): void {
         game.maxSkillPoints += 2;
         game.skillPoints += 3; // technique
 
         game.eventEmitter.on("skillPointUse", (game: Game) => {
             this.talent(game);
         });
+
+        for (let char of game.characters) {
+            char.addEffect(
+                new Nocturne(
+                    char,
+                    game.characters.filter((c) => c.element == Element.Quantum)
+                        .length - 1
+                )
+            );
+        }
     }
 
     act(game: Game): void {

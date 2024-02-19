@@ -28,20 +28,16 @@ export class Game {
     }
 
     run() {
-        // this.printActionValues();
-        // console.log(this.totalAV);
-        // console.log(this.maxAV);
+        console.log("setting up characters");
+        for (const c of this.characters) {
+            c.setup(this);
+        }
 
+        console.log("running");
         while (this.totalAV <= this.maxAV) {
             this.act();
-            // this.printActionValues();
-        }
-
-        for (const c of this.characters) {
-            c.printTotalDamage();
         }
         return;
-        // return this.characters[0].printTotalDamage();
     }
 
     act() {

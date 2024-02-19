@@ -34,4 +34,8 @@ export abstract class Character extends Player {
                 amount * (1 + this.stats.energyRegenerationRate)
         );
     }
+
+    setup(game: Game) {
+        return;
+    }
 }
