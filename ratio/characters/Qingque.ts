@@ -18,9 +18,6 @@ import { EffectAttribute } from "../system/effects/Effect";
 export class Qingque extends Character {
     ultDamage: number = 0;
     basicDamage: number = 0;
-    turns: number = 0;
-    lightCone: LightCone;
-    relicSets: RelicSet[];
     hiddenHand: boolean = false;
 
     constructor(

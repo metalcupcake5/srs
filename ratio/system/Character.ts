@@ -1,5 +1,7 @@
 import { Game } from "./Game";
+import { LightCone } from "./LightCone";
 import { Player } from "./Player";
+import { RelicSet } from "./RelicSet";
 import { Stats } from "./Stats";
 
 export enum Element {
@@ -15,6 +17,10 @@ export enum Element {
 export abstract class Character extends Player {
     currentEnergy: number = 0;
     element: Element;
+    relicSets: RelicSet[];
+    totalDamage: number = 0;
+    turns: number = 0;
+    lightCone: LightCone;
 
     constructor(name: string, stats: Stats, element: Element) {
         super(name, stats.speed, stats);
@@ -36,6 +42,9 @@ export abstract class Character extends Player {
     }
 
     setup(game: Game) {
+        for (let set of this.relicSets) {
+            set.setup(game);
+        }
         return;
     }
 }

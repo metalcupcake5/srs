@@ -1,5 +1,4 @@
 import { PlanarSet } from "../../system/PlanarSet";
-import { RelicSet } from "../../system/RelicSet";
 import { Stats } from "../../system/Stats";
 import { Attack } from "../../system/attacks/Attack";
 import {

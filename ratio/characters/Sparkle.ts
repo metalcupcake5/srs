@@ -18,16 +18,10 @@ import { Nocturne } from "../effects/buffs/Nocturne";
 // TODO subscribe to skill point event
 
 export class Sparkle extends Character {
-    totalDamage: number = 0;
-    turns: number = 0;
-    lightCone: LightCone;
-    relicSets: RelicSet[];
-
     constructor(
         lightCone: LightCone,
         substats: Rolls,
-        relicSets: RelicSet[] = [],
-        game: Game
+        relicSets: RelicSet[] = []
     ) {
         const stats = new Stats(
             {
@@ -70,6 +64,10 @@ export class Sparkle extends Character {
                         .length - 1
                 )
             );
+        }
+
+        for (let set of this.relicSets) {
+            set.setup(game);
         }
     }
 

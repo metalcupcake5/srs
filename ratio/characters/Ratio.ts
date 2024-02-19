@@ -11,10 +11,6 @@ import {
 import { EffectAttribute } from "../system/effects/Effect";
 
 export class Ratio extends Character {
-    totalDamage: number = 0;
-    turns: number = 0;
-    lightCone: LightCone;
-    relicSets: RelicSet[];
     // When Dr. Ratio uses his Skill, for every debuff on the target,
     // his CRIT Rate increases by 2.5% and CRIT DMG by 5%. This effect can stack up to 6 time(s).
     summationStacks = 3;

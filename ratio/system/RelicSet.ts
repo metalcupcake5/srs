@@ -1,3 +1,4 @@
+import { Game } from "./Game";
 import { Stats } from "./Stats";
 import { Attack } from "./attacks/Attack";
 
@@ -10,7 +11,15 @@ export abstract class RelicSet {
         this.pieces = pieces;
     }
 
-    abstract modifyStats(stats: Stats): Stats;
+    modifyStats(stats: Stats): Stats {
+        return stats;
+    }
 
-    abstract modifyAttack(attack: Attack): Attack;
+    modifyAttack(attack: Attack): Attack {
+        return attack;
+    }
+
+    setup(game: Game) {
+        return;
+    }
 }

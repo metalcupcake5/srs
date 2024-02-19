@@ -7,10 +7,6 @@ import { RelicSet } from "../system/RelicSet";
 import { type Rolls, Stats } from "../system/Stats";
 
 export class FuXuan extends Character {
-    totalDamage: number = 0;
-    turns: number = 0;
-    lightCone: LightCone;
-    relicSets: RelicSet[];
     matrixTurns = 0;
     matrixEffect = new MatrixOfPrescienceEffect(this);
 
@@ -49,6 +45,10 @@ export class FuXuan extends Character {
         this.matrixEffect.resetDuration(); // technique
         for (let char of game.characters) {
             char.addEffect(this.matrixEffect);
+        }
+
+        for (let set of this.relicSets) {
+            set.setup(game);
         }
     }
 

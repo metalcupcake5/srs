@@ -9,11 +9,6 @@ import { RelicSet } from "../system/RelicSet";
 import { type Rolls, Stats } from "../system/Stats";
 
 export class SilverWolf extends Character {
-    totalDamage: number = 0;
-    turns: number = 0;
-    lightCone: LightCone;
-    relicSets: RelicSet[];
-
     constructor(
         lightCone: LightCone,
         substats: Rolls,
