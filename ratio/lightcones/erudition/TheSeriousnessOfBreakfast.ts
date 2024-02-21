@@ -1,14 +1,12 @@
-import { Disputation } from "../../effects/buffs/Disputation";
 import { Character } from "../../system/Character";
 import { Game } from "../../system/Game";
 import { LightCone } from "../../system/LightCone";
 import { Stats } from "../../system/Stats";
-import { Attack, AttackType } from "../../system/attacks/Attack";
+import { Attack } from "../../system/attacks/Attack";
 import {
     AttackModifier,
     AttackModifierType,
 } from "../../system/attacks/AttackModifier";
-import { EffectType } from "../../system/effects/Effect";
 
 /*
 S5
