@@ -38,10 +38,11 @@ export class FuXuan extends Character {
 
         this.lightCone = lightCone;
         this.relicSets = relicSets;
-        lightCone.linkCharacter(this);
     }
 
     setup(game: Game): void {
+        this.lightCone.linkCharacter(game, this);
+
         this.matrixEffect.resetDuration(); // technique
         for (let char of game.characters) {
             char.addEffect(this.matrixEffect);

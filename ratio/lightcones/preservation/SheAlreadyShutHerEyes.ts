@@ -19,7 +19,7 @@ export class SheAlreadyShutHerEyes extends LightCone {
         });
     }
 
-    linkCharacter(character: Character) {
+    linkCharacter(game: Game, character: Character) {
         this.character = character;
         this.character.stats.percentHealth += 0.24;
         this.character.stats.energyRegenerationRate += 0.12;

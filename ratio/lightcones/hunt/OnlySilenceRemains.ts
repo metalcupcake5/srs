@@ -18,7 +18,7 @@ export class OnlySilenceRemains extends LightCone {
         });
     }
 
-    linkCharacter(character: Character) {
+    linkCharacter(game: Game, character: Character) {
         this.character = character;
         this.character.stats.percentAttack += 0.16;
     }

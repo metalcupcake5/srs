@@ -24,7 +24,7 @@ export class PlaceholderLightCone extends LightCone {
         });
     }
 
-    linkCharacter(character: Character) {
+    linkCharacter(game: Game, character: Character) {
         this.character = character;
     }
 
@@ -33,7 +33,6 @@ export class PlaceholderLightCone extends LightCone {
     }
 
     modifyAttack(game: Game, player: Character, attack: Attack): Attack {
-
         return attack;
     }
 }

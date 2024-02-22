@@ -28,7 +28,7 @@ export abstract class LightCone {
      * Link a character to the light cone and add stats that are always active
      * @param character character to link
      */
-    abstract linkCharacter(character: Character);
+    abstract linkCharacter(game: Game, character: Character);
 
     /**
      * Modify stats based on external variables

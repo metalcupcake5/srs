@@ -17,7 +17,7 @@ export class TodayIsAnotherPeacefulDay extends LightCone {
         });
     }
 
-    linkCharacter(character: Character) {
+    linkCharacter(game: Game, character: Character) {
         this.character = character;
     }
 

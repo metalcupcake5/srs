@@ -42,6 +42,8 @@ export abstract class Character extends Player {
     }
 
     setup(game: Game) {
+        this.lightCone.linkCharacter(game, this);
+
         for (let set of this.relicSets) {
             set.setup(game);
         }

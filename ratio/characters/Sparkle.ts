@@ -45,10 +45,11 @@ export class Sparkle extends Character {
 
         this.lightCone = lightCone;
         this.relicSets = relicSets;
-        lightCone.linkCharacter(this);
     }
 
     setup(game: Game): void {
+        this.lightCone.linkCharacter(game, this);
+
         game.maxSkillPoints += 2;
         game.skillPoints += 3; // technique
 

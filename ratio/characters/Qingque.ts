@@ -47,7 +47,6 @@ export class Qingque extends Character {
 
         this.lightCone = lightCone;
         this.relicSets = relicSets;
-        lightCone.linkCharacter(this);
     }
 
     act(game: Game): void {
