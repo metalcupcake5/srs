@@ -1,4 +1,4 @@
-import { Attack, AttackType } from "../../system/attacks/Attack";
+import { Attack } from "../../system/attacks/Attack";
 import {
     AttackModifier,
     AttackModifierType,
