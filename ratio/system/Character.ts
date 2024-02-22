@@ -3,6 +3,7 @@ import { LightCone } from "./LightCone";
 import { Player } from "./Player";
 import { RelicSet } from "./RelicSet";
 import { Stats } from "./Stats";
+import { EffectAttribute } from "./effects/Effect";
 
 export enum Element {
     Physical = "physical",
@@ -27,6 +28,15 @@ export abstract class Character extends Player {
         this.element = element;
     }
 
+    setup(game: Game) {
+        this.lightCone.linkCharacter(game, this);
+
+        for (let set of this.relicSets) {
+            set.setup(game);
+        }
+        return;
+    }
+
     abstract act(game: Game): void;
 
     abstract damage(game: Game, damage: number): void;
@@ -41,12 +51,20 @@ export abstract class Character extends Player {
         );
     }
 
-    setup(game: Game) {
-        this.lightCone.linkCharacter(game, this);
+    preAttackStats(game: Game): Stats {
+        let buffedStats = this.stats.clone();
 
-        for (let set of this.relicSets) {
-            set.setup(game);
+        for (const set of this.relicSets) {
+            buffedStats = set.modifyStats(buffedStats);
         }
-        return;
+
+        buffedStats = this.lightCone.modifyCharacterStats(game, buffedStats);
+
+        for (const effect of this.effects) {
+            if (effect.attributes.includes(EffectAttribute.Stat)) {
+                buffedStats = effect.modifyStats(buffedStats);
+            }
+        }
+        return buffedStats;
     }
 }

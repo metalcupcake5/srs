@@ -96,23 +96,6 @@ export class Seele extends Character {
         this.regenerateEnergy(5);
     }
 
-    preAttackStats(game: Game): Stats {
-        let buffedStats = this.stats.clone();
-
-        for (const set of this.relicSets) {
-            buffedStats = set.modifyStats(buffedStats);
-        }
-
-        buffedStats = this.lightCone.modifyCharacterStats(game, buffedStats);
-
-        for (const effect of this.effects) {
-            if (effect.attributes.includes(EffectAttribute.Stat)) {
-                buffedStats = effect.modifyStats(buffedStats);
-            }
-        }
-        return buffedStats;
-    }
-
     preAttackModifiers(game: Game, attack: Attack): Attack {
         for (const set of this.relicSets) {
             attack = set.modifyAttack(attack);

@@ -38,7 +38,10 @@ export class Action {
                 ? (character as Character).currentEnergy
                 : 0;
         this.attack = attack || null;
-        this.stats = character.stats.clone();
+        this.stats =
+            character instanceof Character
+                ? (character as Character).preAttackStats(game)
+                : character.stats.clone();
         this.effects = [];
         for (const e of character.effects) {
             this.effects.push({
