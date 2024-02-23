@@ -23,7 +23,8 @@ export class Qingque extends Character {
     constructor(
         lightCone: LightCone,
         substats: Rolls,
-        relicSets: RelicSet[] = []
+        relicSets: RelicSet[] = [],
+        speedBoots: boolean
     ) {
         const stats = new Stats(
             {
@@ -41,7 +42,7 @@ export class Qingque extends Character {
         stats.quantumDamageBoost += 0.144;
         stats.percentDefense += 0.125;
 
-        stats.addDpsCharacterMainstats(Element.Quantum, true, false);
+        stats.addDpsCharacterMainstats(Element.Quantum, true, speedBoots);
 
         super("Qingque", stats, Element.Quantum);
 
