@@ -9,7 +9,7 @@ import { AttackModifier, AttackModifierType } from "./AttackModifier";
  * @param reduction % def reduction
  */
 function defReductionFormula({
-    defenderLevel = 90,
+    defenderLevel = 95,
     attackerLevel = 80,
     reduction = 0,
 }) {
