@@ -58,7 +58,7 @@ export class FuXuan extends Character {
 
         const target = game.getRandomEnemy();
 
-        if (this.matrixEffect.duration < 1) {
+        if (this.matrixEffect.duration < 1 && game.skillPoints > 0) {
             this.skill(game);
             return;
         }
