@@ -41,6 +41,8 @@ export class Sparkle extends Character {
 
         stats.addSupportCharacterMainstats();
 
+        stats.critDamage += 0.648; // crit damage body
+
         super("Sparkle", stats, Element.Quantum);
 
         this.lightCone = lightCone;
