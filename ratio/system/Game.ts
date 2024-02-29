@@ -28,12 +28,12 @@ export class Game {
     }
 
     run() {
-        console.log("setting up characters");
+        // console.log("setting up characters");
         for (const c of this.characters) {
             c.setup(this);
         }
 
-        console.log("running");
+        // console.log("running");
         while (this.totalAV <= this.maxAV) {
             this.act();
         }
